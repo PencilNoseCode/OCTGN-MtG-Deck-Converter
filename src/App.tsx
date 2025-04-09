@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import ContentUpload from './components/content-upload';
+import ContentDownload from './components/content-download';
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
   return (
     <div className="App">
       <ContentUpload onUpload={setContent} />
+      <ContentDownload content={content} fileType='text/xml' fileName='file.o8d' />
     </div>
   );
 }
