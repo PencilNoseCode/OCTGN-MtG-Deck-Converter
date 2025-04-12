@@ -1,32 +1,33 @@
-
 interface ContentDownloadProps {
-    content: string
-    fileType: string
-    fileName: string
+    content: string;
+    fileType: string;
+    fileName: string;
 }
 
 function ContentDownload(props: ContentDownloadProps) {
-    const blob = new Blob([props.content], { type: props.fileType });
-    const fileURL = URL.createObjectURL(blob);
-
     const handleClick = () => {
         if (!props.content) {
-            alert("No content has been uploaded");
+            alert('No content has been uploaded');
+        } else {
+            window.URL = window.URL || window.webkitURL;
+
+            const anchor = document.createElement('a');
+            const blob = new Blob([props.content], { type: props.fileType });
+            anchor.href = window.URL.createObjectURL(blob);
+            anchor.download = props.fileName;
+
+            document.body.appendChild(anchor);
+            anchor.click();
+
+            window.URL.revokeObjectURL(anchor.href);
         }
-        else {
-            URL.revokeObjectURL(fileURL)
-        }
-    }
+    };
 
     return (
         <>
-            <a href={props.content ? fileURL : "#"} 
-                download={props.fileName} 
-                onClick={() => handleClick()}>
-                    {props.fileName}
-            </a>
+            <button onClick={() => handleClick()}>{props.fileName}</button>
         </>
-    )
+    );
 }
 
 export default ContentDownload;
