@@ -3,7 +3,7 @@ import { Cards } from 'scryfall-api'; //https://github.com/MarioMH8/scryfall-api
 //PARAMS:
 //in --> cardName (string)
 //out --> cardID (string) returned from scryfall api
-export function processCard(cardName: any) {
+export function processCard(cardName: string) {
     if (cardName) {
         Cards.byName(cardName).then((result) => {
             if (result) {
@@ -18,5 +18,6 @@ export function processCard(cardName: any) {
         });
     } else {
         console.log('cardName is undefined');
+        // return something else to show that the cardname is undefined
     }
 }

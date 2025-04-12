@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import ContentUpload from './components/content-upload';
 import ContentDownload from './components/content-download';
-import { processCard } from './providers/scryfall-dataprovider';
+import { processCard } from './providers/scryfall-data-provider';
 
 function App() {
     const [content, setContent] = useState('');
@@ -13,7 +13,7 @@ function App() {
         }
     }, [content]);
 
-    processCard('Blood Scrivener'); // take the card name from the card object
+    processCard('Blood Scrivener'); // takes in card name, returns card id
 
     return (
         <div className="App">
