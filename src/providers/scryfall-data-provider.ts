@@ -3,7 +3,7 @@ import { Cards } from 'scryfall-api'; //https://github.com/MarioMH8/scryfall-api
 //PARAMS:
 //in --> cardName (string)
 //out --> cardID (string) returned from scryfall api
-export function processCard(cardName: string) {
+export function getCardID(cardName: string) {
     if (cardName) {
         Cards.byName(cardName).then((result) => {
             if (result) {
