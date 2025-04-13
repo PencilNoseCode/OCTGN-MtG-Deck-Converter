@@ -3,6 +3,8 @@ import './App.css';
 import ContentUpload from './components/content-upload';
 import ContentDownload from './components/content-download';
 import { processCard } from './providers/scryfall-data-provider';
+import { buildXml } from './services/xml-service';
+import O8dXmlCardNode from './types/xml-card-node';
 import Stack from 'react-bootstrap/Stack';
 import Container from 'react-bootstrap/Container';
 
@@ -18,6 +20,12 @@ function App() {
 
     processCard('Blood Scrivener'); // takes in card name, returns card id
 
+    // Just for testing the XML service and download
+    const c1 = new O8dXmlCardNode('1', 'one', '1');
+    const c2 = new O8dXmlCardNode('2', 'two', '2');
+    const c3 = new O8dXmlCardNode('3', 'three', '3');
+    var deckXML = buildXml([c1, c2, c3]); // <== content should be transfored into the deckXML
+
     return (
         <Container className="App">
             <Stack gap={3}>
@@ -30,7 +38,7 @@ function App() {
                 />
                 <ContentDownload
                     label="Download"
-                    content={content}
+                    content={deckXML}
                     fileType="text/xml"
                     fileName={selectedFile.replace('.txt', '.o8d')}
                 />
