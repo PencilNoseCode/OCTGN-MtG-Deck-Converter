@@ -1,4 +1,7 @@
+import Button from 'react-bootstrap/Button';
+
 interface ContentDownloadProps {
+    label: string;
     content: string;
     fileType: string;
     fileName: string;
@@ -25,7 +28,7 @@ function ContentDownload(props: ContentDownloadProps) {
 
     return (
         <>
-            <button onClick={() => handleClick()}>{props.fileName}</button>
+            <Button onClick={() => handleClick()}>{props.label}</Button>
         </>
     );
 }
