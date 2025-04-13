@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/OCTGN-MtG-Deck-Converter/static/css/main.f855e6bc.css",
-    "main.js": "/OCTGN-MtG-Deck-Converter/static/js/main.eb04a13f.js",
+    "main.css": "/OCTGN-MtG-Deck-Converter/static/css/main.bedb3141.css",
+    "main.js": "/OCTGN-MtG-Deck-Converter/static/js/main.27da5f35.js",
     "static/js/453.22844495.chunk.js": "/OCTGN-MtG-Deck-Converter/static/js/453.22844495.chunk.js",
     "index.html": "/OCTGN-MtG-Deck-Converter/index.html",
-    "main.f855e6bc.css.map": "/OCTGN-MtG-Deck-Converter/static/css/main.f855e6bc.css.map",
-    "main.eb04a13f.js.map": "/OCTGN-MtG-Deck-Converter/static/js/main.eb04a13f.js.map",
+    "main.bedb3141.css.map": "/OCTGN-MtG-Deck-Converter/static/css/main.bedb3141.css.map",
+    "main.27da5f35.js.map": "/OCTGN-MtG-Deck-Converter/static/js/main.27da5f35.js.map",
     "453.22844495.chunk.js.map": "/OCTGN-MtG-Deck-Converter/static/js/453.22844495.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.f855e6bc.css",
-    "static/js/main.eb04a13f.js"
+    "static/css/main.bedb3141.css",
+    "static/js/main.27da5f35.js"
   ]
 }
