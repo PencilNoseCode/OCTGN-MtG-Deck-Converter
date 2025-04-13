@@ -17,7 +17,7 @@ export function getCardID(cardName: string) {
             console.log('result is undefined');
             return;
         }
-        console.log(result.id);
+        console.log('Retreiving ID for card: %s', cardName);
         return result.id;
     });
 }
