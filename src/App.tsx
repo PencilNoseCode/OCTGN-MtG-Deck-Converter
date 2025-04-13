@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import ContentUpload from './components/content-upload';
 import ContentDownload from './components/content-download';
-import { getCardID } from './providers/scryfall-data-provider';
+import { parseContent } from './services/card-services';
 
 function App() {
     const [content, setContent] = useState('');
@@ -10,10 +10,9 @@ function App() {
     useEffect(() => {
         if (content) {
             console.log(content);
+            parseContent(content); // NEW
         }
     }, [content]);
-
-    getCardID('Blood Scrivener'); // takes in card name, returns card id
 
     return (
         <div className="App">
