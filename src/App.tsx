@@ -21,10 +21,9 @@ function App() {
     processCard('Blood Scrivener'); // takes in card name, returns card id
 
     // Just for testing the XML service and download
-    const c1 = new O8dXmlCardNode('1', 'one', '1');
-    const c2 = new O8dXmlCardNode('2', 'two', '2');
-    const c3 = new O8dXmlCardNode('3', 'three', '3');
-    var deckXML = buildXml([c1, c2, c3]); // <== content should be transfored into the deckXML
+    const c1 = new O8dXmlCardNode('1', 'one', '10');
+    const c2 = new O8dXmlCardNode('2', 'two', '20');
+    var deckXML = buildXml([c1, c2]); // <== content should be transfored into the deckXML
 
     return (
         <Container className="App">
