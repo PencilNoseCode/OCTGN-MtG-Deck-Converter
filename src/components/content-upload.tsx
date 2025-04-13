@@ -1,4 +1,9 @@
+import Button from 'react-bootstrap/Button';
+
 interface ContentUploadProps {
+    label: string;
+    selectedFile: string;
+    setSelectedFile: React.Dispatch<React.SetStateAction<string>>;
     onUpload: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -8,26 +13,28 @@ function ContentUpload(props: ContentUploadProps) {
         props.onUpload(event.target?.result as string);
     };
 
-    const handleChange: React.ChangeEventHandler<HTMLInputElement> = (
-        event: React.ChangeEvent<HTMLInputElement>
-    ) => {
-        if (event?.target?.files) {
-            fr.readAsText(event.target.files[0]);
+    const handleChange = (event: Event) => {
+        var inputElement = event?.target as HTMLInputElement;
+        if (inputElement.files) {
+            fr.readAsText(inputElement.files[0]);
+            props.setSelectedFile(inputElement.files[0].name);
         }
+    };
+
+    const handleClick = () => {
+        const fileInput = document.createElement('input');
+        fileInput.id = 'file-input';
+        fileInput.name = 'file-input';
+        fileInput.type = 'file';
+        fileInput.accept = '.txt';
+        fileInput.addEventListener('change', (e) => handleChange(e));
+        fileInput.click();
     };
 
     return (
         <>
-            <form id="file-upload-form">
-                <label htmlFor="file">File </label>
-                <input
-                    id="file"
-                    name="file"
-                    type="file"
-                    accept=".txt"
-                    onChange={handleChange}
-                />
-            </form>
+            <Button onClick={handleClick}>{props.label}</Button>
+            <span>{props.selectedFile}</span>
         </>
     );
 }
