@@ -1,5 +1,5 @@
 import { XMLBuilder } from 'fast-xml-parser';
-import O8dXmlCardNode from '../types/o8d-xml-card-node';
+import XmlCardNode from '../types/xml-card-node';
 
 const options = {
     format: true,
@@ -10,6 +10,6 @@ const options = {
 
 const xmlBuilder = new XMLBuilder(options);
 
-export function ToO8dXml(deck: O8dXmlCardNode[]): string {
+export function buildXml(deck: XmlCardNode[]): string {
     return xmlBuilder.build(deck);
 }

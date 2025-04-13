@@ -1,4 +1,4 @@
-export default class O8dXmlCardNode {
+export default class XmlCardNode {
     attr_id: string;
     attr_name: string;
     attr_qty: string;
