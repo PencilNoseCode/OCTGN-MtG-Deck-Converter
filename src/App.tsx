@@ -3,9 +3,14 @@ import './App.css';
 import ContentUpload from './components/content-upload';
 import ContentDownload from './components/content-download';
 import { parseContent } from './services/card-services';
+import { buildXml } from './services/xml-service';
+import O8dXmlCardNode from './types/xml-card-node';
+import Stack from 'react-bootstrap/Stack';
+import Container from 'react-bootstrap/Container';
 
 function App() {
     const [content, setContent] = useState('');
+    const [selectedFile, setSelectedFile] = useState('No file selected');
 
     useEffect(() => {
         if (content) {
@@ -14,15 +19,29 @@ function App() {
         }
     }, [content]);
 
+    // Just for testing the XML service and download
+    const c1 = new O8dXmlCardNode('1', 'one', '10');
+    const c2 = new O8dXmlCardNode('2', 'two', '20');
+    var deckXML = buildXml([c1, c2]); // <== content should be transfored into the deckXML
+
     return (
-        <div className="App">
-            <ContentUpload onUpload={setContent} />
-            <ContentDownload
-                content={content}
-                fileType="text/xml"
-                fileName="file.o8d"
-            />
-        </div>
+        <Container className="App">
+            <Stack gap={3}>
+                <h3>Select your exported MtG Deck text file from OCTGN</h3>
+                <ContentUpload
+                    label="Browse"
+                    selectedFile={selectedFile}
+                    setSelectedFile={setSelectedFile}
+                    onUpload={setContent}
+                />
+                <ContentDownload
+                    label="Download"
+                    content={deckXML}
+                    fileType="text/xml"
+                    fileName={selectedFile.replace('.txt', '.o8d')}
+                />
+            </Stack>
+        </Container>
     );
 }
 

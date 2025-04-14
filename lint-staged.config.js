@@ -5,5 +5,5 @@ module.exports = {
         'prettier --write',
         () => 'npx tsc --noEmit',
     ],
-    '*.{json}': ['prettier --write'],
+    '*.json': ['prettier --write'],
 };

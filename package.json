@@ -1,7 +1,7 @@
 {
     "name": "octgn-mtg-deck-converter",
     "version": "0.1.0",
-    "homepage": "https://jasstsg.github.io/OCTGN-MtG-Deck-Converter",
+    "homepage": "https://pencilnosecode.github.io/OCTGN-MtG-Deck-Converter",
     "private": true,
     "dependencies": {
         "@testing-library/dom": "^10.4.0",
@@ -13,6 +13,7 @@
         "@types/react": "^19.1.0",
         "@types/react-dom": "^19.1.1",
         "bootstrap": "^5.3.5",
+        "fast-xml-parser": "^5.2.0",
         "husky": "^9.1.7",
         "prettier": "^3.5.3",
         "react": "^19.1.0",
