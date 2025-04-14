@@ -1,14 +1,11 @@
-import UserCard from './user-card';
+import Zone from './zone';
 
-export default interface Deck {
+export default class Deck {
     name: string;
-    cards: Array<UserCard>;
-}
+    zones: Zone[];
 
-export function newDeck(cards: Array<UserCard>) {
-    let newDeck: Deck = {
-        name: 'Deck Name',
-        cards: cards,
-    };
-    return newDeck;
+    public constructor(name: string, zones: Zone[]) {
+        this.name = name || '';
+        this.zones = zones || [];
+    }
 }
