@@ -10,9 +10,8 @@
  *  3. after deck has been built, send deck
  */
 
-import { getCardID } from '../providers/scryfall-data-provider';
-import UserCard from '../types/user-card';
-import { newCard } from '../types/user-card';
+//import { getCardID } from '../providers/scryfall-data-provider';
+import Card from '../types/card';
 //import Deck from "../types/deck";
 //import { newDeck } from "../types/deck";
 
@@ -24,7 +23,7 @@ const ZONES: string[] = [
     'Magic the Gathering',
 ];
 
-var deck: Array<UserCard> = []; // consider not having an environmental variable
+var deck: Card[] = []; // consider not having an environmental variable
 
 /**
  * @param content from uploaded text file
@@ -44,13 +43,14 @@ export function parseContent(content: string) {
         if (ZONES.includes(element)) {
             return; // skip element, for now
         } else {
+            var xIndex = element.indexOf('x');
             createCard(
-                Number(element.substring(0, element.indexOf('x'))),
-                String(element.split('x')[element.indexOf('x')]).trimStart()
+                element.substring(0, xIndex),
+                element.substring(xIndex + 2).trimStart()
             );
         }
     });
-    console.log('Content parsing completed. Deck returned.');
+    //console.log('Content parsing completed. Deck returned.');
     console.log(deck);
     return deck;
 }
@@ -63,11 +63,12 @@ export function parseContent(content: string) {
  *
  * @todo fix synchronousity issue where card is pushed before getCardID returns
  */
-function createCard(cardQuant: number, cardName: string) {
+function createCard(cardQuant: string, cardName: string) {
     if (!cardQuant || !cardName) {
         console.log('invalid card parameters');
     }
     window.setTimeout(() => {
-        deck.push(newCard(cardQuant, cardName, String(getCardID(cardName)))); // TODO: decouple deck push and create card if needed
+        deck.push(new Card(cardQuant, 'placeholder-id', cardName));
+        //deck.push(new Card(cardQuant, String(getCardID(cardName), cardName))); // TODO: decouple deck push and create card if needed
     }, 100);
 }

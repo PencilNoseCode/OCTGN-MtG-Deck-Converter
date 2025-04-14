@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import ContentUpload from './components/content-upload';
 import ContentDownload from './components/content-download';
-import { parseContent } from './services/card-services';
+import { parseContent } from './services/card-service';
 import { buildXml } from './services/xml-service';
-import O8dXmlCardNode from './types/xml-card-node';
 import Stack from 'react-bootstrap/Stack';
 import Container from 'react-bootstrap/Container';
 
@@ -14,15 +13,17 @@ function App() {
 
     useEffect(() => {
         if (content) {
-            console.log(content);
+            //console.log(content);
             parseContent(content); // NEW
         }
     }, [content]);
 
-    // Just for testing the XML service and download
-    const c1 = new O8dXmlCardNode('1', 'one', '10');
-    const c2 = new O8dXmlCardNode('2', 'two', '20');
-    var deckXML = buildXml([c1, c2]); // <== content should be transfored into the deckXML
+    var parsedContent = parseContent(content);
+    if (!parsedContent) {
+        parsedContent = [];
+    }
+    var deckXML = buildXml(parsedContent);
+    console.log(deckXML);
 
     return (
         <Container className="App">
