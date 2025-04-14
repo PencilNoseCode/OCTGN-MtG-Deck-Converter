@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './App.css';
 import ContentUpload from './components/content-upload';
 import ContentDownload from './components/content-download';
-import { processCard } from './providers/scryfall-data-provider';
+import { parseContent } from './services/card-services';
 import { buildXml } from './services/xml-service';
 import O8dXmlCardNode from './types/xml-card-node';
 import Stack from 'react-bootstrap/Stack';
@@ -15,10 +15,9 @@ function App() {
     useEffect(() => {
         if (content) {
             console.log(content);
+            parseContent(content); // NEW
         }
     }, [content]);
-
-    processCard('Blood Scrivener'); // takes in card name, returns card id
 
     // Just for testing the XML service and download
     const c1 = new O8dXmlCardNode('1', 'one', '10');
