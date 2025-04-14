@@ -1,11 +1,11 @@
 export default class Card {
+    quantity: string;
     id: string;
     name: string;
-    quantity: string;
 
-    public constructor(id: string, name: string, quantity: string) {
+    public constructor(quantity: string, id: string, name: string) {
+        this.quantity = quantity || '';
         this.id = id || '';
         this.name = name || '';
-        this.quantity = quantity || '';
     }
 }

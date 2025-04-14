@@ -13,7 +13,7 @@ function App() {
 
     useEffect(() => {
         if (content) {
-            console.log(content);
+            //console.log(content);
             parseContent(content); // NEW
         }
     }, [content]);

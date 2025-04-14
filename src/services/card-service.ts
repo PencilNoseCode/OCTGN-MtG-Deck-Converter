@@ -10,7 +10,7 @@
  *  3. after deck has been built, send deck
  */
 
-import { getCardID } from '../providers/scryfall-data-provider';
+//import { getCardID } from '../providers/scryfall-data-provider';
 import Card from '../types/card';
 //import Deck from "../types/deck";
 //import { newDeck } from "../types/deck";
@@ -46,11 +46,11 @@ export function parseContent(content: string) {
             var xIndex = element.indexOf('x');
             createCard(
                 element.substring(0, xIndex),
-                element.substring(xIndex).trimStart()
+                element.substring(xIndex + 2).trimStart()
             );
         }
     });
-    console.log('Content parsing completed. Deck returned.');
+    //console.log('Content parsing completed. Deck returned.');
     console.log(deck);
     return deck;
 }
@@ -68,6 +68,7 @@ function createCard(cardQuant: string, cardName: string) {
         console.log('invalid card parameters');
     }
     window.setTimeout(() => {
-        deck.push(new Card(cardQuant, cardName, String(getCardID(cardName)))); // TODO: decouple deck push and create card if needed
+        deck.push(new Card(cardQuant, 'placeholder-id', cardName));
+        //deck.push(new Card(cardQuant, String(getCardID(cardName), cardName))); // TODO: decouple deck push and create card if needed
     }, 100);
 }

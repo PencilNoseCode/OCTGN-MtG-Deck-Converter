@@ -1,11 +1,11 @@
 export default class XmlCardNode {
-    attr_id: string;
-    attr_name: string;
     attr_qty: string;
+    attr_id: string;
+    card: string;
 
-    public constructor(id: string, name: string, quantity: string) {
-        this.attr_id = id || '';
-        this.attr_name = name || '';
+    public constructor(quantity: string, id: string, name: string) {
         this.attr_qty = quantity || '';
+        this.attr_id = id || '';
+        this.card = name || '';
     }
 }
