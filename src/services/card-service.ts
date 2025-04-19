@@ -1,15 +1,3 @@
-/**
- * ideal processing sequence:
- *  1. parse content per line
- *  2a. if content line element is a Zone then ...
- *  2b. if content line element is not a Zone then treat it as a card
- *      i. update card quantity, card name
- *      ii. get card ID
- *      iii. update card ID
- *      iv. add initialized card to deck
- *  3. after deck has been built, send deck
- */
-
 import { getCardIdAsync } from '../providers/scryfall-data-provider';
 import Card from '../types/card';
 import Deck from '../types/deck';
@@ -75,6 +63,7 @@ function createCard(cardQuant: string, cardName: string): Card {
 /**
  * @param deck
  * @returns deck with cards that have IDs
+ *
  * @todo fix optimization
  */
 export async function populateCardIds(deck: Deck): Promise<Deck> {
