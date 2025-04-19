@@ -5,7 +5,7 @@ export default class Zone {
     cards: Card[];
 
     public constructor(name: string, shared: string, cards: Card[]) {
-        this.name = name || '';
-        this.cards = cards || [];
+        this.name = name;
+        this.cards = cards;
     }
 }

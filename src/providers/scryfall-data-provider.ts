@@ -1,23 +1,13 @@
 import { Cards } from 'scryfall-api'; //https://github.com/MarioMH8/scryfall-api/blob/main/DOCUMENTATION.md
 
 /**
- * WARNING: implement window.setTimeout when using this data provider
+ * @summary Uses a card's name to get its ID from the Scryfal API
+ * @param cardName The exact name of the card
+ * @returns The card's ID
  */
-
-//PARAMS:
-//in --> cardName (string)
-//out --> cardID (string) returned from scryfall api
-export function getCardID(cardName: string) {
-    if (!cardName) {
-        console.log('cardName is undefined');
-        return;
-    }
-    Cards.byName(cardName).then((result) => {
-        if (!result) {
-            console.log('result is undefined');
-            return;
-        }
+export async function getCardIdAsync(cardName: string): Promise<string> {
+    return await Cards.byName(cardName).then((result) => {
         console.log('Retreiving ID for card: %s', cardName);
-        return result.id;
+        return result ? result.id : 'undefined';
     });
 }

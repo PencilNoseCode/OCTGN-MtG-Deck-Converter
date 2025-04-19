@@ -1,29 +1,26 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import './App.css';
 import ContentUpload from './components/content-upload';
 import ContentDownload from './components/content-download';
-import { parseContent } from './services/card-service';
+import { parseContent, populateCardIds } from './services/card-service';
 import { buildXml } from './services/xml-service';
 import Stack from 'react-bootstrap/Stack';
 import Container from 'react-bootstrap/Container';
+import { Button } from 'react-bootstrap';
 
 function App() {
-    const [content, setContent] = useState('');
     const [selectedFile, setSelectedFile] = useState('No file selected');
+    const [content, setContent] = useState('');
+    const [deckXML, setDeckXML] = useState('');
 
-    useEffect(() => {
-        if (content) {
-            //console.log(content);
-            parseContent(content); // NEW
+    const convert = async () => {
+        var parsedContent = parseContent(content);
+        if (parsedContent) {
+            setDeckXML(buildXml(await populateCardIds(parsedContent)));
+        } else {
+            console.log('parsed content is undefined');
         }
-    }, [content]);
-
-    var parsedContent = parseContent(content);
-    if (!parsedContent) {
-        parsedContent = [];
-    }
-    var deckXML = buildXml(parsedContent);
-    console.log(deckXML);
+    };
 
     return (
         <Container className="App">
@@ -35,6 +32,7 @@ function App() {
                     setSelectedFile={setSelectedFile}
                     onUpload={setContent}
                 />
+                <Button onClick={convert}>Convert File</Button>
                 <ContentDownload
                     label="Download"
                     content={deckXML}
