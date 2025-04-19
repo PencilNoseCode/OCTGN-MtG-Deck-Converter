@@ -32,6 +32,7 @@ function App() {
         var parsedContent = parseContent(content);
         if (parsedContent) {
             setDeckXML(buildXml(await populateCardIds(parsedContent)));
+            console.log(await populateCardIds(parsedContent));
         } else {
             console.log('parsed content is undefined');
         }

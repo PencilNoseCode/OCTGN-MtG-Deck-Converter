@@ -1,27 +1,11 @@
-/**
- * ideal processing sequence:
- *  1. parse content per line
- *  2a. if content line element is a Zone then ...
- *  2b. if content line element is not a Zone then treat it as a card
- *      i. update card quantity, card name
- *      ii. get card ID
- *      iii. update card ID
- *      iv. add initialized card to deck
- *  3. after deck has been built, send deck
- */
-
 import { getCardIdAsync } from '../providers/scryfall-data-provider';
 import Card from '../types/card';
-//import Deck from "../types/deck";
-//import { newDeck } from "../types/deck";
+import Deck from '../types/deck';
+import Zone from '../types/zone';
 
-const ZONES: string[] = [
-    'Main',
-    'Command Zone',
-    'Sideboard',
-    'Planes/Schemes',
-    'Magic the Gathering',
-];
+const ZONES: string[] = ['Main', 'Command Zone', 'Sideboard', 'Planes/Schemes'];
+
+const MTG = 'Magic the Gathering';
 
 /**
  * @param content from uploaded text file
@@ -30,24 +14,35 @@ const ZONES: string[] = [
  * @todo figure out how to handle Zones
  * @todo return custom error messages
  */
-export function parseContent(content: string): Card[] {
+export function parseContent(content: string): Deck {
     console.log('content', content);
     if (!content) {
-        return []; // abort parsing
+        //**TODO: THROW CUSTOM ERROR**//
+        return new Deck(); // abort parsing
     }
 
-    var deck: Card[] = [];
+    var deck: Deck = new Deck();
     content.split(/\r?\n/).forEach((element: string) => {
+        if (element && MTG === element) {
+            return;
+        }
+        if (element && ZONES.includes(element)) {
+            //managing zone content
+            var zone: Zone = new Zone();
+            zone.name = element;
+            deck.push(zone);
+        }
         if (element && !ZONES.includes(element)) {
+            //managing card content
             var xIndex = element.indexOf('x');
-            createCard(
-                deck,
-                element.substring(0, xIndex),
-                element.substring(xIndex + 2).trimStart()
+            deck.zones[deck.zones.length - 1].push(
+                createCard(
+                    element.substring(0, xIndex),
+                    element.substring(xIndex + 2).trimStart()
+                )
             );
         }
     });
-    //console.log('Content parsing completed. Deck returned.');
     console.log(deck);
     return deck;
 }
@@ -55,26 +50,28 @@ export function parseContent(content: string): Card[] {
 /**
  * @param cardQuant quantity of a specific card in the deck
  * @param cardName name of a specific card in the deck
- * @implements 100ms delay per card creation
- * ! updates the environmental deck object
- *
- * @todo fix synchronousity issue where card is pushed before getCardID returns
  */
-function createCard(deck: Card[], cardQuant: string, cardName: string) {
+function createCard(cardQuant: string, cardName: string): Card {
     if (!cardQuant || !cardName) {
+        //**TODO: THROW CUSTOM ERROR**//
         console.log('invalid card parameters');
-        return;
     }
-
-    // TODO: decouple deck push and create card if needed
-    deck.push(new Card(cardQuant, '', cardName));
+    return new Card(cardQuant, '', cardName);
 }
 
-export async function populateCardIds(cards: Card[]): Promise<Card[]> {
+/**
+ * @param deck
+ * @returns deck with cards that have IDs
+ *
+ * @todo fix optimization
+ */
+export async function populateCardIds(deck: Deck): Promise<Deck> {
     var card: Card;
-    for (let i = 0; i < cards.length; i++) {
-        card = cards[i];
-        card.id = await getCardIdAsync(card.name);
+    for (let i = 0; i < deck.zones.length; i++) {
+        for (let j = 0; j < deck.zones[i].cards.length; j++) {
+            card = deck.zones[i].cards[j];
+            card.id = await getCardIdAsync(card.name);
+        }
     }
-    return cards;
+    return deck;
 }
