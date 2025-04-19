@@ -5,7 +5,7 @@ export default class Deck {
     zones: Zone[];
 
     public constructor(name: string, zones: Zone[]) {
-        this.name = name || '';
-        this.zones = zones || [];
+        this.name = name;
+        this.zones = zones;
     }
 }

@@ -10,7 +10,7 @@
  *  3. after deck has been built, send deck
  */
 
-//import { getCardID } from '../providers/scryfall-data-provider';
+import { getCardIdAsync } from '../providers/scryfall-data-provider';
 import Card from '../types/card';
 //import Deck from "../types/deck";
 //import { newDeck } from "../types/deck";
@@ -23,8 +23,6 @@ const ZONES: string[] = [
     'Magic the Gathering',
 ];
 
-var deck: Card[] = []; // consider not having an environmental variable
-
 /**
  * @param content from uploaded text file
  * @returns Array<UserCard>
@@ -32,19 +30,18 @@ var deck: Card[] = []; // consider not having an environmental variable
  * @todo figure out how to handle Zones
  * @todo return custom error messages
  */
-export function parseContent(content: string) {
+export function parseContent(content: string): Card[] {
+    console.log('content', content);
     if (!content) {
-        return; // abort parsing
+        return []; // abort parsing
     }
+
+    var deck: Card[] = [];
     content.split(/\r?\n/).forEach((element: string) => {
-        if (!element) {
-            return; // skip element
-        }
-        if (ZONES.includes(element)) {
-            return; // skip element, for now
-        } else {
+        if (element && !ZONES.includes(element)) {
             var xIndex = element.indexOf('x');
             createCard(
+                deck,
                 element.substring(0, xIndex),
                 element.substring(xIndex + 2).trimStart()
             );
@@ -63,12 +60,21 @@ export function parseContent(content: string) {
  *
  * @todo fix synchronousity issue where card is pushed before getCardID returns
  */
-function createCard(cardQuant: string, cardName: string) {
+function createCard(deck: Card[], cardQuant: string, cardName: string) {
     if (!cardQuant || !cardName) {
         console.log('invalid card parameters');
+        return;
     }
-    window.setTimeout(() => {
-        deck.push(new Card(cardQuant, 'placeholder-id', cardName));
-        //deck.push(new Card(cardQuant, String(getCardID(cardName), cardName))); // TODO: decouple deck push and create card if needed
-    }, 100);
+
+    // TODO: decouple deck push and create card if needed
+    deck.push(new Card(cardQuant, '', cardName));
+}
+
+export async function populateCardIds(cards: Card[]): Promise<Card[]> {
+    var card: Card;
+    for (let i = 0; i < cards.length; i++) {
+        card = cards[i];
+        card.id = await getCardIdAsync(card.name);
+    }
+    return cards;
 }
