@@ -6,21 +6,45 @@ import { parseContent, populateCardIds } from './services/card-service';
 import { buildXml } from './services/xml-service';
 import Stack from 'react-bootstrap/Stack';
 import Container from 'react-bootstrap/Container';
-import { Button } from 'react-bootstrap';
+import Alert from 'react-bootstrap/Alert';
+import Button from 'react-bootstrap/Button';
 
 function App() {
     const [selectedFile, setSelectedFile] = useState('No file selected');
     const [content, setContent] = useState('');
     const [deckXML, setDeckXML] = useState('');
+    const [showAlert, setShowAlert] = useState(true);
+
+    var uploadError = false;
 
     const convert = async () => {
         var parsedContent = parseContent(content);
-        if (parsedContent) {
+        if (false) {
             setDeckXML(buildXml(await populateCardIds(parsedContent)));
         } else {
+            uploadError = true;
+            setShowAlert(true);
             console.log('parsed content is undefined');
         }
     };
+
+    if (showAlert && uploadError) {
+        return (
+            <Alert
+                variant="danger"
+                onClose={() => setShowAlert(false)}
+                dismissible
+            >
+                <Alert.Heading>Oh snap! You got an error!</Alert.Heading>
+                <p>
+                    Change this and that and try again. Duis mollis, est non
+                    commodo luctus, nisi erat porttitor ligula, eget lacinia
+                    odio sem nec elit. Cras mattis consectetur purus sit amet
+                    fermentum.
+                </p>
+            </Alert>
+        );
+    }
 
     return (
         <Container className="App">
