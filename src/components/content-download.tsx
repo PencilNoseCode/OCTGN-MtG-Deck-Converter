@@ -1,13 +1,14 @@
 import Button from 'react-bootstrap/Button';
 
 interface ContentDownloadProps {
+    disabled: boolean;
     label: string;
     content: string;
     fileType: string;
     fileName: string;
 }
 
-function ContentDownload(props: ContentDownloadProps) {
+export function ContentDownload(props: ContentDownloadProps) {
     const handleClick = () => {
         if (!props.content) {
             alert('No content has been uploaded');
@@ -28,9 +29,9 @@ function ContentDownload(props: ContentDownloadProps) {
 
     return (
         <>
-            <Button onClick={() => handleClick()}>{props.label}</Button>
+            <Button disabled={props.disabled} onClick={() => handleClick()}>
+                {props.label}
+            </Button>
         </>
     );
 }
-
-export default ContentDownload;

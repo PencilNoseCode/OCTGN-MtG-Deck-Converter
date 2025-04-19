@@ -7,7 +7,7 @@ interface ContentUploadProps {
     onUpload: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function ContentUpload(props: ContentUploadProps) {
+export function ContentUpload(props: ContentUploadProps) {
     const fr = new FileReader();
     fr.onload = (event: ProgressEvent<FileReader>) => {
         props.onUpload(event.target?.result as string);
@@ -38,5 +38,3 @@ function ContentUpload(props: ContentUploadProps) {
         </>
     );
 }
-
-export default ContentUpload;
