@@ -46,6 +46,8 @@ export function parseContent(content: string): Card[] {
                 element.substring(xIndex + 2).trimStart()
             );
         }
+        if (element && ZONES.includes(element)) {
+        }
     });
     //console.log('Content parsing completed. Deck returned.');
     console.log(deck);
