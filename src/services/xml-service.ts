@@ -3,6 +3,8 @@ import XmlCardNode from '../types/xml-card-node';
 import XmlDeckNode from '../types/xml-deck-node';
 import XmlSectionNode from '../types/xml-section-node';
 import Deck from '../types/deck';
+import Zone from '../types/zone';
+import Card from '../types/card';
 
 const OCTGN_MTG_GUID = 'a6c8d2e8-7cd8-11dd-8f94-e62b56d89593';
 
@@ -17,32 +19,23 @@ const options = {
 const xmlBuilder = new XMLBuilder(options);
 
 export function buildXml(deck: Deck): string {
-    return '';
-    // return xmlBuilder.build([
-    //     new XmlDeckNode(OCTGN_MTG_GUID, [
-    //         new XmlSectionNode(
-    //             'Main',
-    //             'False',
-    //             deck.map(
-    //                 (card) => new XmlCardNode(card.quantity, card.id, card.name)
-    //             )
-    //         ),
-    //         new XmlSectionNode('Command Zone', 'False', []),
-    //         new XmlSectionNode('Sideboard', 'False', []),
-    //         new XmlSectionNode('Planes/Schemes', 'False', []),
-    //     ]),
-    // ]);
+    return xmlBuilder.build([
+        new XmlDeckNode(OCTGN_MTG_GUID, buildXmlSections(deck.zones)),
+    ]);
 }
 
-/*
-
-
-
-
-
-function buildXmlCards(cards: Card[]): XmlCardNode[] {
-    return cards.map(
-        (card) => new XmlCardNode(card.id, card.name, card.quantity)
-    );
+function buildXmlSections(zones: Zone[]) {
+    return zones.map((zone) => {
+        return new XmlSectionNode(
+            zone.name,
+            zone.shared,
+            buildXmlCards(zone.cards)
+        );
+    });
 }
-*/
+
+function buildXmlCards(cards: Card[]) {
+    return cards.map((card) => {
+        return new XmlCardNode(card.quantity, card.id, card.name);
+    });
+}

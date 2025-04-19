@@ -3,13 +3,9 @@ import Card from '../types/card';
 import Deck from '../types/deck';
 import Zone from '../types/zone';
 
-const ZONES: string[] = [
-    'Main',
-    'Command Zone',
-    'Sideboard',
-    'Planes/Schemes',
-    'Magic the Gathering',
-];
+const ZONES: string[] = ['Main', 'Command Zone', 'Sideboard', 'Planes/Schemes'];
+
+const MTG = 'Magic the Gathering';
 
 /**
  * @param content from uploaded text file
@@ -27,6 +23,9 @@ export function parseContent(content: string): Deck {
 
     var deck: Deck = new Deck();
     content.split(/\r?\n/).forEach((element: string) => {
+        if (element && MTG === element) {
+            return;
+        }
         if (element && ZONES.includes(element)) {
             //managing zone content
             var zone: Zone = new Zone();

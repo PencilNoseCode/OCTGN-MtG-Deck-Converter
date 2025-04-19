@@ -20,7 +20,7 @@ function App() {
     const convert = async () => {
         var parsedContent = parseContent(content);
         if (parsedContent) {
-            //    setDeckXML(buildXml(await populateCardIds(parsedContent)));
+            setDeckXML(buildXml(await populateCardIds(parsedContent)));
             console.log(await populateCardIds(parsedContent));
         } else {
             uploadError = true;
