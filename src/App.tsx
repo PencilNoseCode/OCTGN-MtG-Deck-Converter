@@ -20,10 +20,6 @@ function App() {
     }, [selectedFile]);
 
     useEffect(() => {
-        setIsConverting(false);
-    }, [deckXML]);
-
-    useEffect(() => {
         setDisableDownload(isConverting);
     }, [isConverting]);
 
@@ -36,6 +32,7 @@ function App() {
         } else {
             console.log('parsed content is undefined');
         }
+        setIsConverting(false);
     };
 
     return (
