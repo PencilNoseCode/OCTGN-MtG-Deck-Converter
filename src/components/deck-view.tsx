@@ -35,7 +35,9 @@ export function DeckView() {
                         </Row>
                         <Row>
                             <Col sm={6}>
-                                <Button variant="primary">Add New</Button>
+                                <Button size="sm" variant="primary">
+                                    Add Deck
+                                </Button>
                             </Col>
                         </Row>
                     </Col>
