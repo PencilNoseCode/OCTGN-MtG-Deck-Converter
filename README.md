@@ -17,8 +17,7 @@
 - After it has be reviewed and merged, make sure to upadte your `master` branch: `git pull origin master`
 
 # Build & Deploy
-- Run `npm run deploy`
-- Run `npm run deploy`
-    - This first runs `npm run build` which builds all of the static files from the client app
-    - Then second it packages the static files with the server app as a standalone exe
+- Run `npm run build`
+    - Fist this builds all of the static files from the client app
+    - Second it packages the static files with the server app as a standalone exe
 - Run `npm run prod` OR manually double click `/dist/octgnmagic.exe` and open `http://localhost:8080`
