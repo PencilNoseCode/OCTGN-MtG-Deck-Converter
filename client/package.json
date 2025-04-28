@@ -1,7 +1,6 @@
 {
-    "name": "octgn-mtg-deck-converter",
+    "name": "octgnmagic-client",
     "version": "0.1.0",
-    "homepage": "https://pencilnosecode.github.io/OCTGN-MtG-Deck-Converter",
     "private": true,
     "dependencies": {
         "@testing-library/dom": "^10.4.0",

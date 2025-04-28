@@ -1,0 +1,23 @@
+{
+  "name": "octgnmagic",
+  "version": "1.0.0",
+  "scripts": {
+    "install": "cd client && npm run install && cd ../server && npm run install",
+    "start-client": "cd client && npm run start",
+    "start-server": "cd server && npm run start",
+    "build": "cd client && npm run build",
+    "deploy": "npm run build && pkg .",
+    "prod": "start http://localhost:8080 && cd dist && octgnmagic.exe"
+  },
+  "bin": "server/index.js",
+  "pkg": {
+    "assets": "client/build",
+    "targets": [
+      "latest"
+    ],
+    "outputPath": "dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
