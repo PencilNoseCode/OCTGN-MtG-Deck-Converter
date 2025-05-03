@@ -4,12 +4,12 @@ import { DeckBuilder } from './components/deck-builder';
 import { DeckView } from './components/deck-view';
 import { FileConverter } from './components/file-converter';
 import { QuickBuilder } from './components/quick-builder';
-import { ServerRequestTest } from './components/server-request-test';
+import { SettingsPage } from './components/settings-page';
 
 function App() {
     return (
         <>
-            <ServerRequestTest />
+            <SettingsPage />
             <DeckView />
             <DeckBuilder />
             <CardSearch />
