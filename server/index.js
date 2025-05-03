@@ -1,7 +1,9 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const { pathExists, readSettings, writeSettings } = require('./services/file-service');
+const { pathExists, writeFile, readFile, readFileNames } = require('./services/file-service');
+
+const SETTINGS_FILE_PATH = 'octgnmagic.config.json';
 
 const PORT = 8080;
 const server = express();
@@ -15,17 +17,22 @@ server.post('/api/path-exists', (req, res) => {
 });
 
 server.post('/api/settings-write', (req, res) => {
-    res.send(writeSettings(req.body));
+    res.send(writeFile(SETTINGS_FILE_PATH, req.body));
 });
 
 server.get('/api/settings-read', (req, res) => {
-    res.send(readSettings());
+    res.send(readFile(SETTINGS_FILE_PATH));
+});
+
+server.post('/api/decks', (req, res) => {
+    console.log(req.body.path);
+    res.send(readFileNames(req.body.path));
 });
 
 server.get('/{*splat}', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
-server.listen(PORT, () => {
-    console.log(`server listening on port ${PORT}`);
+server.listen(PORT, async () => {
+    console.log(`Click 'http://localhost:${PORT}' to open OCTGNMagic`);
 });

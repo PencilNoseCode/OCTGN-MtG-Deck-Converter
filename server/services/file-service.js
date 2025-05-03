@@ -1,23 +1,29 @@
-import fs from 'fs';
+const fs = require('fs');
 
-const SETTINGS_FILE_PATH = 'octgnmagic.config.json';
 
-export function pathExists(path) {
-    console.log('file-service', path)
-    return fs.existsSync(path);
-}
+module.exports = {
+    pathExists(path) {
+        console.log('file-service', path)
+        return fs.existsSync(path);
+    },
+    
+    writeFile(filePath, settings) {
+        try {
+            fs.writeFileSync(filePath, JSON.stringify(settings));
+            return true;
+        }
+        catch (ex) {
+            console.error(ex);
+            return false;
+        }
+    },
+    
+    readFile(filePath) {
+        return fs.readFileSync(filePath);
+    }, 
 
-export function writeSettings(settings) {
-    try {
-        fs.writeFileSync(SETTINGS_FILE_PATH, JSON.stringify(settings));
-        return true;
+    readFileNames(filePath) {
+        const files = fs.readdirSync(filePath).filter(f => f.endsWith('.o8d'));
+        return files;
     }
-    catch (ex) {
-        console.error(ex);
-        return false;
-    }
-}
-
-export function readSettings() {
-    return fs.readFileSync(SETTINGS_FILE_PATH);
 }

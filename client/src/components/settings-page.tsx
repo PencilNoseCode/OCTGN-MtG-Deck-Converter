@@ -6,6 +6,7 @@ import { Settings } from "../types/settings";
 import { readSettings, writeSettings } from "../services/settings-service";
 import { useEffect, useState } from "react";
 import { Notification } from "./notification";
+import Container from "react-bootstrap/Container";
 
 export function SettingsPage() {
     const [settings, setSettings] = useState<Settings>();
@@ -40,7 +41,7 @@ export function SettingsPage() {
     }
 
     return (
-        <>
+        <Container>
             <h1>Settings</h1>
             <Table>
                 <thead>
@@ -70,6 +71,6 @@ export function SettingsPage() {
                 onClose={() => setShowNotification(false)}
                 show={showNotification}
             />}
-        </>
+        </Container>
     )
 }
