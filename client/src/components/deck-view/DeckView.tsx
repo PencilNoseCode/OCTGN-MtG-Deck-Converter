@@ -8,23 +8,15 @@ import { api } from '../../services/api-service';
 import { useEffect, useState } from 'react';
 import { DeckViewListGroupItem } from './partials/DeckViewListGroupItem';
 import { DeckViewTabPane } from './partials/DeckViewTabPane';
+import { DeckViewFavouriteDecks } from './partials/DeckViewFavouriteDecks';
 
-export function DeckView() {
-    const deckDirectory = "C:/Users/Tyler/AppData/Local/Programs/OCTGN/Data/Decks";
-    const [decks, setDecks] = useState<string[]>();
+export function DeckView({ decks } : { decks: string[] }) {
 
-    useEffect(() => {
-        const getDecksAsync = async () => {
-            const decks = await api.getDecks(deckDirectory)
-            if (decks) {
-                setDecks(decks.data);
-            }
-        }
-        getDecksAsync();
-    }, [])
 
     return (
-        <Container className="Deckview">
+        <Container className="Deckview">            
+            <h1>My Decks</h1>
+            <DeckViewFavouriteDecks />
             <h1>My Decks</h1>
             <Tab.Container id="Decks" defaultActiveKey="#deck0">
                 <Row>

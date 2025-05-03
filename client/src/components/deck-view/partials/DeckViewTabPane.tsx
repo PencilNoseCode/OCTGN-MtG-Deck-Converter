@@ -22,28 +22,25 @@ export function DeckViewTabPane({ index, name, image, firstCard }: DeckViewTabPa
                         variant="top"
                         src={image}
                     />
-                    <Card.Text>
-                        <Table>
-                            <thead>
-                                <tr>
-                                    <th>Commander</th>
-                                    <th>Color</th>
-                                    <th>Last Updated</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>{firstCard.name}</td>
-                                    <td>{firstCard.color}</td>
-                                    <th>{firstCard.lastUpdated}</th>
-                                </tr>
-                            </tbody>
-                        </Table>
-                    </Card.Text>
+                    <Table>
+                        <thead>
+                            <tr>
+                                <th>Commander</th>
+                                <th>Color</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{firstCard.name}</td>
+                                <td>{firstCard.color}</td>
+                                <td>{firstCard.lastUpdated}</td>
+                            </tr>
+                        </tbody>
+                    </Table>
                     <Card.Link href="#">Edit</Card.Link>
-                    <Card.Link href="#">
-                        Export to Octgn
-                    </Card.Link>
+                    <Card.Link href="#">Export to Octgn</Card.Link>
+                    <Card.Link href="#">Add to Favourites</Card.Link>
                 </Card.Body>
             </Card>
         </Tab.Pane>
