@@ -18,13 +18,13 @@ export function CardSearch() {
             <Tab.Container>
                 <Form>
                     <Row>
-                        <Col sm={10}>
+                        <Col m="auto">
                             <Form.Control
                                 type="text"
                                 placeholder="Search card name"
                             />
                         </Col>
-                        <Col sm={2}>
+                        <Col sm="auto">
                             <Button size="sm">Search</Button>
                         </Col>
                     </Row>
@@ -32,7 +32,7 @@ export function CardSearch() {
                 <br />
                 <h4>Search Results</h4>
                 <h5>"desire"</h5>
-                <Card style={{ width: '75rem' }}>
+                <Card style={{ width: '100%' }}>
                     <Card.Body>
                         <Table>
                             <thead>
@@ -114,21 +114,23 @@ export function CardSearch() {
                 </Card>
                 <br />
                 <h4>Card Details</h4>
-                <Card style={{ width: '35rem' }}>
+                <Card style={{ width: '50%' }}>
                     <Card.Body>
-                        <Card.Title>Depths of Desire 2🔵</Card.Title>
-                        <Card.Title>Instant</Card.Title>
-                        <blockquote className="blockquote mb-0">
-                            <p>
-                                Return target creature to its owner’s hand.
-                                Create a Treasure token. It’s an artifact with
-                                “Tap, Sacrifice this token: Add one mana of any
-                                color.”
-                            </p>
-                            <footer className="blockquote-footer">
-                                Pockets full of gold, lungs full of brine.
-                            </footer>
-                        </blockquote>
+                        <Row sm="auto">
+                            <Col sm={8}><Card.Title>Depths of Desire</Card.Title></Col>
+                            <Col><Card.Title>2🔵</Card.Title>
+                            </Col>
+                        </Row>
+                        <Card.Subtitle>Instant</Card.Subtitle>
+                        <Card.Text>
+                            Return target creature to its owner’s hand.
+                            Create a Treasure token. It’s an artifact with
+                            “Tap, Sacrifice this token: Add one mana of any
+                            color.”
+                        </Card.Text>
+                        <CardFooter>
+                            Pockets full of gold, lungs full of brine.
+                        </CardFooter>
                     </Card.Body>
                     <Button size="sm" variant="primary">
                         Add to Deck
