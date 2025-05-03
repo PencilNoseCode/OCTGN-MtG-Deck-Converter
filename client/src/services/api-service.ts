@@ -38,9 +38,12 @@ class ApiService {
         }
     }
 
-    async pathExists(path: string) {
-        console.log(path);
-        return await this.postRequest("/path-exists", new Path(path));
+    async pathExists(path: string): Promise<AxiosResponse<boolean>> {
+        const res =  await this.postRequest("/path-exists", new Path(path));
+        if (!res) {
+            console.error(`Error occured while checking if ${path} exists`);
+        }
+        return res?.data;
     }
 
     async writeSettings(settings: Settings) {
@@ -50,6 +53,12 @@ class ApiService {
     async readSettings() {
         return await this.getRequest("/settings-read");
     }
+
+    async getDecks(deckDirectory: string) {
+        console.debug(`Getting decks from ${deckDirectory}`)
+        return await this.postRequest("/decks", new Path(deckDirectory));
+    }
+    
 }
 
 export const api = new ApiService();

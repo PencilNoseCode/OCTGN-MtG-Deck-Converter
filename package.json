@@ -5,7 +5,7 @@
     "start-client": "cd client && npm run start",
     "start-server": "cd server && npm run start",
     "build": "cd client && npm run build && cd .. && pkg .",
-    "prod": "start http://localhost:8080 && cd dist && octgnmagic.exe"
+    "prod": "cd dist && octgnmagic.exe"
   },
   "bin": "server/index.js",
   "pkg": {

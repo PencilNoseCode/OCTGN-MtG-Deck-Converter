@@ -6,12 +6,18 @@ import { Settings } from "../types/settings";
 import { readSettings, writeSettings } from "../services/settings-service";
 import { useEffect, useState } from "react";
 import { Notification } from "./notification";
+import Container from "react-bootstrap/Container";
 
-export function SettingsPage() {
-    const [settings, setSettings] = useState<Settings>();
+interface SettingsPageProps {
+    settings: Settings | undefined,
+    setSettings: React.Dispatch<React.SetStateAction<Settings | undefined>>
+}
+
+export function SettingsPage({ settings, setSettings} : SettingsPageProps) {
+    //const [settings, setSettings] = useState<Settings>();
     const [showNotification, setShowNotification] = useState(false);
     const [notification, setNotification] = useState("");
-
+    /*
     useEffect(() => {
         const getSettingsAsync = async () => {
             const settingsData = await readSettings();
@@ -21,7 +27,7 @@ export function SettingsPage() {
         } 
         getSettingsAsync();
     }, [])
-
+    */
     const writeSettingsAsync = async() => {
         if (settings) {
             const success = await writeSettings(settings);
@@ -40,7 +46,7 @@ export function SettingsPage() {
     }
 
     return (
-        <>
+        <Container>
             <h1>Settings</h1>
             <Table>
                 <thead>
@@ -70,6 +76,6 @@ export function SettingsPage() {
                 onClose={() => setShowNotification(false)}
                 show={showNotification}
             />}
-        </>
+        </Container>
     )
 }
