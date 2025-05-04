@@ -4,13 +4,12 @@ import ListGroup from 'react-bootstrap/ListGroup';
 import Row from 'react-bootstrap/Row';
 import Tab from 'react-bootstrap/Tab';
 import Button from 'react-bootstrap/Button';
-import { api } from '../../services/api-service';
-import { useEffect, useState } from 'react';
 import { DeckViewListGroupItem } from './partials/DeckViewListGroupItem';
 import { DeckViewTabPane } from './partials/DeckViewTabPane';
 import { DeckViewFavouriteDecks } from './partials/DeckViewFavouriteDecks';
+import Deck from '../../types/deck';
 
-export function DeckView({ decks } : { decks: string[] }) {
+export function DeckView({ decks } : { decks: Deck[] }) {
 
 
     return (
@@ -23,7 +22,7 @@ export function DeckView({ decks } : { decks: string[] }) {
                     <Col sm={4}>
                         <ListGroup>
                             {decks && decks.map((d,i) => (
-                                <DeckViewListGroupItem key={i} name={d} index={i}/>
+                                <DeckViewListGroupItem key={i} name={d.name} index={i}/>
                             ))}
                         </ListGroup>
                         <br />
@@ -41,12 +40,12 @@ export function DeckView({ decks } : { decks: string[] }) {
                                 <DeckViewTabPane 
                                     key={i}
                                     index={i}
-                                    name={d}
+                                    name={d.name}
                                     image="https://cards.scryfall.io/large/front/9/5/95a87b4e-f0ea-457c-9517-4acf313c4ca6.jpg?1743206852"
+                                    lastUpdated="April 26, 2025"
                                     firstCard={{
-                                        name: "Adamaro, First to Desire",
-                                        color: "Blue, Red",
-                                        lastUpdated: "April 26, 2025"
+                                        name: d.zones[0]?.cards[0].name,
+                                        color: "Blue, Red"
                                     }}
                                 />
                             ))}

@@ -9,10 +9,13 @@ import { SettingsPage } from './components/settings-page';
 import { Settings } from './types/settings';
 import { readSettings } from './services/settings-service';
 import { api } from './services/api-service';
+import { parseXml } from './services/xml-service';
+import { bufferToString } from './helpers/BufferHelper';
+import Deck from './types/deck';
 
 function App() {
     const [settings, setSettings] = useState<Settings>();
-    const [decks, setDecks] = useState<string[]>();
+    const [decks, setDecks] = useState<Deck[]>();
     
     useEffect(() => {
         const getSettingsAsync = async () => {
@@ -29,7 +32,11 @@ function App() {
             if (settings) {
                 const decks = await api.getDecks(settings.deckDirectory)
                 if (decks) {
-                    setDecks(decks.data);
+                    setDecks(
+                        decks.data.map((d: any) => (
+                            parseXml(d.name, bufferToString(d.content))
+                        ))
+                    )
                 }
             }
         }

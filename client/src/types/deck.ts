@@ -1,13 +1,12 @@
 import Zone from './zone';
-import Card from './card';
 
 export default class Deck {
     name: string;
     zones: Zone[];
 
-    public constructor() {
-        this.name = '';
-        this.zones = [];
+    public constructor(name?: string, zones?: Zone[]) {
+        this.name = name || '';
+        this.zones = zones || [];
     }
 
     public push(zone: Zone) {

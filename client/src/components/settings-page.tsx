@@ -1,10 +1,10 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
-import { getElementById } from "../helpers/document-helper";
+import { getElementById } from "../helpers/DocumentHelper";
 import { Settings } from "../types/settings";
-import { readSettings, writeSettings } from "../services/settings-service";
-import { useEffect, useState } from "react";
+import { writeSettings } from "../services/settings-service";
+import { useState } from "react";
 import { Notification } from "./notification";
 import Container from "react-bootstrap/Container";
 
@@ -14,20 +14,9 @@ interface SettingsPageProps {
 }
 
 export function SettingsPage({ settings, setSettings} : SettingsPageProps) {
-    //const [settings, setSettings] = useState<Settings>();
     const [showNotification, setShowNotification] = useState(false);
     const [notification, setNotification] = useState("");
-    /*
-    useEffect(() => {
-        const getSettingsAsync = async () => {
-            const settingsData = await readSettings();
-            if (settingsData) {
-                setSettings(settingsData.data as Settings);
-            }
-        } 
-        getSettingsAsync();
-    }, [])
-    */
+    
     const writeSettingsAsync = async() => {
         if (settings) {
             const success = await writeSettings(settings);
