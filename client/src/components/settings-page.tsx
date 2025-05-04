@@ -1,9 +1,9 @@
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
-import { getElementById } from "../helpers/DocumentHelper";
+import { getElementById } from "../helpers/document-helper";
 import { Settings } from "../types/settings";
-import { writeSettings } from "../services/settings-service";
+import { config } from "../services/config-service";
 import { useState } from "react";
 import { Notification } from "./notification";
 import Container from "react-bootstrap/Container";
@@ -19,7 +19,7 @@ export function SettingsPage({ settings, setSettings} : SettingsPageProps) {
     
     const writeSettingsAsync = async() => {
         if (settings) {
-            const success = await writeSettings(settings);
+            const success = await config.write(settings);
             if (success) {
                 setNotification(`Save settings ${success.data ? 'succeeded' : 'failed'}`)
                 setShowNotification(true);
@@ -51,6 +51,7 @@ export function SettingsPage({ settings, setSettings} : SettingsPageProps) {
                             <Form.Control 
                                 id="deck-directory" 
                                 type="text"
+                                placeholder="C:\Users\<USERNAME>\AppData\Local\Programs\OCTGN\Data\Decks"
                                 defaultValue={
                                     settings ? settings.deckDirectory : ""
                                 } />

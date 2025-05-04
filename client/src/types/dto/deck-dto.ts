@@ -1,6 +1,6 @@
-import Zone from './zone';
+import Zone from './zone-dto';
 
-export default class Deck {
+export default class DeckDto {
     name: string;
     zones: Zone[];
 

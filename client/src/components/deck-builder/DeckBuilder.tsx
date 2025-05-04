@@ -1,10 +1,10 @@
 import { Anchor, Container } from 'react-bootstrap';
 import Tab from 'react-bootstrap/Tab';
 import Accordion from 'react-bootstrap/Accordion';
-import Deck from '../../types/deck';
+import DeckDto from '../../types/dto/deck-dto';
 import { DeckBuilderAccordionItem } from './partials/DeckBuilderAccordionItem';
 
-export function DeckBuilder({ deck }: { deck: Deck }) {
+export function DeckBuilder({ deck }: { deck: DeckDto }) {
     return (
         <Container className="DeckBuilder">
             <Anchor className="deckbuilder"></Anchor>

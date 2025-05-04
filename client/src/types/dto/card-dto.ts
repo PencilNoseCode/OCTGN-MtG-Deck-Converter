@@ -1,4 +1,4 @@
-export default class Card {
+export default class CardDto {
     quantity: string;
     id: string;
     name: string;

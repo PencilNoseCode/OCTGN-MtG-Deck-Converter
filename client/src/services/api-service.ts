@@ -1,4 +1,4 @@
-import axios, { AxiosHeaders, AxiosInstance, AxiosResponse } from "axios";
+import axios, { AxiosInstance, AxiosResponse } from "axios";
 import { Settings } from "../types/settings";
 
 const BASE_URL = 'http://localhost:8080/api';

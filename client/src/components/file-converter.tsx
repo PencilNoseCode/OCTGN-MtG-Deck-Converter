@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
-import { parseContent, populateCardIds } from '../services/card-service';
 import Container from 'react-bootstrap/Container';
 import Stack from 'react-bootstrap/Stack';
 import { ContentUpload } from './content-upload';
 import { ConvertButton } from './convert-button';
 import { ContentDownload } from './content-download';
-import { buildXml } from '../services/xml-service';
+import { text } from '../services/text-file-service';
+import { xml } from '../services/xml-service';
 
 export function FileConverter() {
     const [selectedFile, setSelectedFile] = useState('No file selected');
@@ -24,10 +24,10 @@ export function FileConverter() {
 
     const handleConvert = async () => {
         setIsConverting(true);
-        var parsedContent = parseContent(content);
+        var parsedContent = text.parse(content);
         if (parsedContent) {
-            setDeckXML(buildXml(await populateCardIds(parsedContent)));
-            console.log(await populateCardIds(parsedContent));
+            setDeckXML(xml.build(await text.populateCardIds(parsedContent)));
+            console.log(await text.populateCardIds(parsedContent));
         } else {
             console.log('parsed content is undefined');
         }

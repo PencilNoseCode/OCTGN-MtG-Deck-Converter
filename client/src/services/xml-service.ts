@@ -1,10 +1,10 @@
 import { X2jOptions, XMLBuilder, XmlBuilderOptions, XMLParser } from 'fast-xml-parser';
-import XmlCardNode from '../types/xml-card-node';
-import XmlDeckNode from '../types/xml-deck-node';
-import XmlSectionNode from '../types/xml-section-node';
-import Deck from '../types/deck';
-import Zone from '../types/zone';
-import Card from '../types/card';
+import CardNode from '../types/xml/card-node';
+import DeckNode from '../types/xml/deck-node';
+import SectionNode from '../types/xml/section-node';
+import DeckDto from '../types/dto/deck-dto';
+import ZoneDto from '../types/dto/zone-dto';
+import CardDto from '../types/dto/card-dto';
 
 const OCTGN_MTG_GUID = 'a6c8d2e8-7cd8-11dd-8f94-e62b56d89593';
 
@@ -24,41 +24,49 @@ const parserOptions: X2jOptions = {
 const xmlBuilder = new XMLBuilder(builderOptions);
 const xmlParser = new XMLParser(parserOptions);
 
-export function buildXml(deck: Deck): string {
-    return xmlBuilder.build([
-        new XmlDeckNode(OCTGN_MTG_GUID, buildXmlSections(deck.zones)),
-    ]);
+class XmlService {
+
+    // Building the .o8d files
+    public build(deck: DeckDto): string {
+        return xmlBuilder.build([
+            new DeckNode(OCTGN_MTG_GUID, this.buildSectionNodes(deck.zones)),
+        ]);
+    }
+    
+    private buildSectionNodes(zones: ZoneDto[]): SectionNode[] {
+        return zones.map((zone) => {
+            return new SectionNode(
+                zone.name,
+                zone.shared,
+                this.buildCardNodes(zone.cards)
+            );
+        });
+    }
+    
+    private buildCardNodes(cards: CardDto[]): CardNode[] {
+        return cards.map((card) => {
+            return new CardNode(card.quantity, card.id, card.name);
+        });
+    }
+    
+    // Parsing the .o8d files
+    public parse(deckName: string, deckXml: string): DeckDto {
+        const deckJson = xmlParser.parse(deckXml).deck;
+        return new DeckDto(deckName, this.parseSections(deckJson.section));
+    }
+    
+    private parseSections(sections: any[]): ZoneDto[] {
+        return sections.map((section: any) => (
+            new ZoneDto(section.name, this.parseCards(section.card), section.shared)
+        ));
+    }
+    
+    private parseCards(cards: any[]): CardDto[] {
+        return cards ? cards.map((card: any) => (
+            new CardDto(card.qty, card.id, card["#text"])
+        )) : [];
+    }
 }
 
-function buildXmlSections(zones: Zone[]) {
-    return zones.map((zone) => {
-        return new XmlSectionNode(
-            zone.name,
-            zone.shared,
-            buildXmlCards(zone.cards)
-        );
-    });
-}
+export const xml = new XmlService();
 
-function buildXmlCards(cards: Card[]) {
-    return cards.map((card) => {
-        return new XmlCardNode(card.quantity, card.id, card.name);
-    });
-}
-
-export function parseXml(deckName: string, deckXml: string): Deck {
-    const deckJson = xmlParser.parse(deckXml).deck;
-    return new Deck(deckName, parseSections(deckJson.section));
-}
-
-function parseSections(sections: any[]) {
-    return sections.map((section: any) => (
-        new Zone(section.name, parseCards(section.card), section.shared)
-    ));
-}
-
-function parseCards(cards: any[]): Card[] {
-    return cards ? cards.map((card: any) => (
-        new Card(card.qty, card.id, card["#text"])
-    )) : [];
-}

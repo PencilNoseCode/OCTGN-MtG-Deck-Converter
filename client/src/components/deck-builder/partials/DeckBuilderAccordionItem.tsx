@@ -1,6 +1,6 @@
 import { Accordion, Button, Table } from "react-bootstrap";
 import { DeckBuilderAccordionItemTableRow } from "./DeckBuilderAccordionItemTableRow";
-import Zone from "../../../types/zone";
+import Zone from "../../../types/dto/zone-dto";
 
 interface DeckBuilderAccordionItemProps {
     index: number,

@@ -7,9 +7,9 @@ import Button from 'react-bootstrap/Button';
 import { DeckViewListGroupItem } from './partials/DeckViewListGroupItem';
 import { DeckViewTabPane } from './partials/DeckViewTabPane';
 import { DeckViewFavouriteDecks } from './partials/DeckViewFavouriteDecks';
-import Deck from '../../types/deck';
+import DeckDto from '../../types/dto/deck-dto';
 
-export function DeckView({ decks } : { decks: Deck[] }) {
+export function DeckView({ decks } : { decks: DeckDto[] }) {
 
 
     return (

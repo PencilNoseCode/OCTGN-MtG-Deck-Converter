@@ -1,5 +1,5 @@
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
-import Card from "../../../types/card";
+import Card from "../../../types/dto/card-dto";
 
 
 export function DeckBuilderAccordionItemTableRow({ index, card }: { index: number, card: Card}) {

@@ -1,6 +1,6 @@
-import Card from './card';
+import Card from './card-dto';
 
-export default class Zone {
+export default class ZoneDto {
     name: string;
     cards: Card[];
     shared: string;

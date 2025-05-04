@@ -1,4 +1,4 @@
-export default class XmlCardNode {
+export default class CardNode {
     attr_qty: string;
     attr_id: string;
     card: string;
