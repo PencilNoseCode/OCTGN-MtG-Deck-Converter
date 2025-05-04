@@ -3,7 +3,7 @@ const path = require('path');
 const cors = require('cors');
 const { pathExists, writeFile, readFile, readDecks } = require('./services/file-service');
 
-const SETTINGS_FILE_PATH = 'octgnmagic.config.json';
+const SETTINGS_FILE_PATH = './octgnmagic.config.json';
 
 const PORT = 8080;
 const server = express();

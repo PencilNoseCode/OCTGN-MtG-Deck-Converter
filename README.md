@@ -1,7 +1,7 @@
 # Getting started
 - Clone this repo
 - Run `npm run install` (this runs `npm install` in the `client` and `server` folders)
-- Run `npm run start-client` and `npm run start-server` in separate terminals
+- Run `npm run start` (this calls `npm run server` and `npm run client`)
 
 # Development
 - Create a branch using `git branch <branch-name>` or `git checkout -b <branch-name> 

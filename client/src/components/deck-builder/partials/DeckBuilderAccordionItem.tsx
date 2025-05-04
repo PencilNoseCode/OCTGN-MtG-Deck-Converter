@@ -1,0 +1,39 @@
+import { Accordion, Button, Table } from "react-bootstrap";
+import { DeckBuilderAccordionItemTableRow } from "./DeckBuilderAccordionItemTableRow";
+import Zone from "../../../types/zone";
+
+interface DeckBuilderAccordionItemProps {
+    index: number,
+    zone: Zone
+}
+
+
+export function DeckBuilderAccordionItem({ index, zone }: DeckBuilderAccordionItemProps) {
+    return (
+        <Accordion.Item key={`${index}`} eventKey={`${index}`}>
+            <Accordion.Header>{zone.name}</Accordion.Header>
+            <Accordion.Body>
+                <Table>
+                    <thead>
+                        <tr>
+                            <th>Card</th>
+                            <th>Color</th>
+                            <th>Type</th>
+                            <th>Quantity</th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {zone.cards && zone.cards.map((card, i) => (
+                            <DeckBuilderAccordionItemTableRow index={i} card={card}/>
+                        ))}
+                    </tbody>
+                </Table>
+                <Button variant="primary" size="sm">
+                    Add Card
+                </Button>
+            </Accordion.Body>
+        </Accordion.Item>
+    )
+}
