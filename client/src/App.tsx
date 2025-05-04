@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './App.css';
 import { CardSearch } from './components/card-search';
-import { DeckBuilder } from './components/deck-builder';
+import { DeckBuilder } from './components/deck-builder/DeckBuilder';
 import { DeckView } from './components/deck-view/DeckView';
 import { FileConverter } from './components/file-converter';
 import { QuickBuilder } from './components/quick-builder';
@@ -47,7 +47,7 @@ function App() {
         <>
             <SettingsPage settings={settings} setSettings={setSettings} />
             { decks && <DeckView decks={decks}/> }
-            <DeckBuilder />
+            { decks && <DeckBuilder deck={decks[0]}/> }
             <CardSearch />
             <QuickBuilder />
             <FileConverter />

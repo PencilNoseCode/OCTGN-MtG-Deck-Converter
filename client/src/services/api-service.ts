@@ -55,7 +55,6 @@ class ApiService {
     }
 
     async getDecks(deckDirectory: string) {
-        console.debug(`Getting decks from ${deckDirectory}`)
         return await this.postRequest("/decks", new Path(deckDirectory));
     }
     

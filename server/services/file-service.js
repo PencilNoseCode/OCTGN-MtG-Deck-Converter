@@ -3,7 +3,6 @@ const path = require('path');
 
 
 function pathExists(path) {
-    console.log('file-service', path)
     return fs.existsSync(path);
 }
 
@@ -19,6 +18,9 @@ function writeFile(filePath, settings) {
 }
 
 function readFile(filePath) {
+    if (!pathExists(filePath)) {
+        fs.writeFileSync(filePath, "{}");
+    }
     return fs.readFileSync(filePath);
 }
 
@@ -29,14 +31,18 @@ function readFileNames(directoryPath) {
 
 function readDecks(deckDirectory) {
     const deckFiles = [];
-    const deckNames = readFileNames(deckDirectory);
-    deckNames.forEach(deckName => {
-        const deck = {
-            name: deckName,
-            content: readFile(path.join(deckDirectory, deckName))
-        }
-        deckFiles.push(deck); 
-    })
+
+    if (deckDirectory) {
+        const deckNames = readFileNames(deckDirectory);
+        deckNames.forEach(deckName => {
+            const deck = {
+                name: deckName,
+                content: readFile(path.join(deckDirectory, deckName))
+            }
+            deckFiles.push(deck); 
+        })
+    }
+    
     return deckFiles;
 }
 
