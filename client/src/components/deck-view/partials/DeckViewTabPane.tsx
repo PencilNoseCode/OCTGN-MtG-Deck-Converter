@@ -4,15 +4,17 @@ interface DeckViewTabPaneProps {
     index: number,
     name: string,
     image: string,
+    lastUpdated: string,
     firstCard: {
         name: string,
-        color: string,
-        lastUpdated: string
+        color: string
     }
 
 }
 
-export function DeckViewTabPane({ index, name, image, firstCard }: DeckViewTabPaneProps) {
+export function DeckViewTabPane({
+    index, name, image, lastUpdated, firstCard 
+}: DeckViewTabPaneProps) {
     return (
         <Tab.Pane eventKey={`#deck${index}`}>
             <Card style={{ width: '28rem' }}>
@@ -34,7 +36,7 @@ export function DeckViewTabPane({ index, name, image, firstCard }: DeckViewTabPa
                             <tr>
                                 <td>{firstCard.name}</td>
                                 <td>{firstCard.color}</td>
-                                <td>{firstCard.lastUpdated}</td>
+                                <td>{lastUpdated}</td>
                             </tr>
                         </tbody>
                     </Table>

@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const cors = require('cors');
-const { pathExists, writeFile, readFile, readFileNames } = require('./services/file-service');
+const { pathExists, writeFile, readFile, readDecks } = require('./services/file-service');
 
 const SETTINGS_FILE_PATH = 'octgnmagic.config.json';
 
@@ -25,9 +25,15 @@ server.get('/api/settings-read', (req, res) => {
 });
 
 server.post('/api/decks', (req, res) => {
+    res.send(readDecks(req.body.path));
+});
+
+/*
+server.post('/api/decks', (req, res) => {
     console.log(req.body.path);
     res.send(readFileNames(req.body.path));
 });
+*/
 
 server.get('/{*splat}', (req, res) => {
     res.sendFile(path.join(__dirname, '../client/build/index.html'));
