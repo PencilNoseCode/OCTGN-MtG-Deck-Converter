@@ -30,8 +30,7 @@ export function CardSearch() {
                     </Row>
                 </Form>
                 <br />
-                <h4>Search Results</h4>
-                <h5>"desire"</h5>
+                <h4>Results for "desire"</h4>
                 <Card style={{ width: '100%' }}>
                     <Card.Body>
                         <Table>
@@ -114,7 +113,7 @@ export function CardSearch() {
                 </Card>
                 <br />
                 <h4>Card Details</h4>
-                <Card style={{ width: '50%' }}>
+                <Card style={{ width: '25%' }}>
                     <Card.Body>
                         <Row sm="auto">
                             <Col sm={8}><Card.Title>Depths of Desire</Card.Title></Col>

@@ -14,6 +14,7 @@ export function QuickBuilder() {
         <Container className="QuickBuilder">
             <br />
             <h1>Quick Builder</h1>
+            <br />
             <Tab.Container>
                 <h3>Add Your Deck Information</h3>
                 <Row>

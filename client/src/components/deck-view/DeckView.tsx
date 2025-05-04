@@ -17,7 +17,7 @@ export function DeckView({ decks } : { decks: string[] }) {
         <Container className="Deckview">            
             <h1>My Decks</h1>
             <DeckViewFavouriteDecks />
-            <h1>My Decks</h1>
+            <h2>All Decks</h2>
             <Tab.Container id="Decks" defaultActiveKey="#deck0">
                 <Row>
                     <Col sm={4}>
