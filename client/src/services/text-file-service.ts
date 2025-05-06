@@ -1,10 +1,10 @@
+import { MTG, ZONES } from '../constants';
 import { scryfall } from '../providers/scryfall-data-provider';
 import CardDto from '../types/dto/card-dto';
 import DeckDto from '../types/dto/deck-dto';
 import ZoneDto from '../types/dto/zone-dto';
 
-const ZONES: string[] = ['Main', 'Command Zone', 'Sideboard', 'Planes/Schemes'];
-const MTG = 'Magic the Gathering';
+
 
 class TextFileService {
     /**
@@ -69,7 +69,8 @@ public parse(content: string): DeckDto {
         for (let i = 0; i < deck.zones.length; i++) {
             for (let j = 0; j < deck.zones[i].cards.length; j++) {
                 card = deck.zones[i].cards[j];
-                card.id = await scryfall.getCardIdAsync(card.name);
+                var result = await scryfall.getCardAsync(card.name);
+                card.id = result.id;
             }
         }
         return deck;

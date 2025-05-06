@@ -1,15 +1,15 @@
-import Zone from './zone-dto';
+import ZoneDto from './zone-dto';
 
 export default class DeckDto {
     name: string;
-    zones: Zone[];
+    zones: ZoneDto[];
 
-    public constructor(name?: string, zones?: Zone[]) {
+    public constructor(name?: string, zones?: ZoneDto[]) {
         this.name = name || '';
         this.zones = zones || [];
     }
 
-    public push(zone: Zone) {
+    public push(zone: ZoneDto) {
         this.zones.push(zone);
     }
 }

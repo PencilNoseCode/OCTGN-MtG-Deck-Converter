@@ -8,9 +8,24 @@ import { DeckViewListGroupItem } from './partials/DeckViewListGroupItem';
 import { DeckViewTabPane } from './partials/DeckViewTabPane';
 import { DeckViewFavouriteDecks } from './partials/DeckViewFavouriteDecks';
 import DeckDto from '../../types/dto/deck-dto';
+import { useNavigate } from 'react-router';
+import { ZONE } from '../../constants';
+import ZoneDto from '../../types/dto/zone-dto';
 
 export function DeckView({ decks } : { decks: DeckDto[] }) {
+    var navigate = useNavigate();
 
+    const TAB_ID_PREFIX = "Decks-tab-#deck"
+
+    const handleClick = () => {
+        const tabs = document.querySelectorAll(`a[id^="${TAB_ID_PREFIX}"]`);
+        tabs.forEach((t: Element) => {
+            if (t.classList.contains('active')) {
+                const deckIndex = parseInt(t.id.substring(TAB_ID_PREFIX.length));
+                navigate(`/decks/${deckIndex}`, { state: decks[deckIndex]})
+            }
+        } )
+    }
 
     return (
         <Container className="Deckview">            
@@ -32,22 +47,17 @@ export function DeckView({ decks } : { decks: DeckDto[] }) {
                                     Add Deck
                                 </Button>
                             </Col>
+                            <Col sm={6}>
+                                <Button size="sm" variant="primary" onClick={handleClick}>
+                                    Edit Deck
+                                </Button>
+                            </Col>
                         </Row>
                     </Col>
                     <Col sm={8}>
                         <Tab.Content>
                             {decks && decks.map((d,i) => (
-                                <DeckViewTabPane 
-                                    key={i}
-                                    index={i}
-                                    name={d.name}
-                                    image="https://cards.scryfall.io/large/front/9/5/95a87b4e-f0ea-457c-9517-4acf313c4ca6.jpg?1743206852"
-                                    lastUpdated="April 26, 2025"
-                                    firstCard={{
-                                        name: d.zones[0]?.cards[0].name,
-                                        color: "Blue, Red"
-                                    }}
-                                />
+                                renderDeckViewTabPane(d, i)
                             ))}
                         </Tab.Content>
                     </Col>
@@ -55,4 +65,33 @@ export function DeckView({ decks } : { decks: DeckDto[] }) {
             </Tab.Container>
         </Container>
     );
+}
+
+function renderDeckViewTabPane(deck: DeckDto, index: number) {
+    const commanderZone = deck.zones.find(z => z.name === ZONE.Command_Zone);
+    const mainZone = deck.zones.find(z => z.name === ZONE.Main);
+    var coverCard = (commanderZone && commanderZone.cards.length > 0) ?
+        commanderZone.cards[0] : (mainZone && mainZone.cards[0]);
+
+    if (!coverCard) {
+        coverCard = {
+            name: 'N/A',
+            quantity: 'N/A',
+            id: 'N/A',
+            image: 'N/A',
+            type: 'N/A',
+            colors: []
+        } 
+    }
+
+    return (
+        <DeckViewTabPane 
+            key={index}
+            index={index}
+            name={deck.name}
+            image={coverCard.image}
+            lastUpdated="April 26, 2025"
+            coverCard={coverCard}
+        />
+    )
 }

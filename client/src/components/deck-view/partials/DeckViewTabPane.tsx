@@ -1,19 +1,16 @@
 import { Card, Tab, Table } from "react-bootstrap"
+import CardDto from "../../../types/dto/card-dto";
 
 interface DeckViewTabPaneProps {
     index: number,
     name: string,
     image: string,
     lastUpdated: string,
-    firstCard: {
-        name: string,
-        color: string
-    }
-
+    coverCard: CardDto
 }
 
 export function DeckViewTabPane({
-    index, name, image, lastUpdated, firstCard 
+    index, name, image, lastUpdated, coverCard 
 }: DeckViewTabPaneProps) {
     return (
         <Tab.Pane eventKey={`#deck${index}`}>
@@ -34,8 +31,8 @@ export function DeckViewTabPane({
                         </thead>
                         <tbody>
                             <tr>
-                                <td>{firstCard.name}</td>
-                                <td>{firstCard.color}</td>
+                                <td>{coverCard.name}</td>
+                                <td>{coverCard.colors}</td>
                                 <td>{lastUpdated}</td>
                             </tr>
                         </tbody>
