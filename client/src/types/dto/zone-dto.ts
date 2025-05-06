@@ -1,17 +1,17 @@
-import Card from './card-dto';
+import CardDto from "./card-dto";
 
 export default class ZoneDto {
     name: string;
-    cards: Card[];
+    cards: CardDto[];
     shared: string;
 
-    public constructor(name?: string, cards?: Card[], shared?: string) {
+    public constructor(name?: string, cards?: CardDto[], shared?: string) {
         this.name = name || '';
         this.cards = cards || [];
         this.shared = shared || 'False';
     }
 
-    public push(card: Card) {
+    public push(card: CardDto) {
         this.cards.push(card);
     }
 }

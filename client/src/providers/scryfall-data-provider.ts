@@ -1,6 +1,35 @@
-import { Cards } from 'scryfall-api'; //https://github.com/MarioMH8/scryfall-api/blob/main/DOCUMENTATION.md
+// https://github.com/MarioMH8/scryfall-api/blob/main/DOCUMENTATION.md
+import { Card, Cards } from 'scryfall-api'; 
+import { CardNotFoundByNameError } from '../errors/CardNotFoundByNameError';
 
 class ScryallDataProvider {
+    public async getCardAsync(cardName: string): Promise<Card> {
+        // Get card from cache if available
+        const cachedCard = this.getCardFromCache(cardName);
+        if (cachedCard) {
+            return cachedCard;
+        }
+        
+        // Get card from API
+        return await Cards.byName(cardName).then((result) => {
+            if (result) {
+                // Set card in cache
+                this.setCardInCache(result);
+                return result;
+            }
+            throw new CardNotFoundByNameError(cardName);
+        });
+    }
+
+    private setCardInCache(card: Card) {
+        localStorage.setItem(card.name, JSON.stringify(card));
+    }
+
+    private getCardFromCache(cardName: string): Card | null {
+        const cachedCard = localStorage.getItem(cardName);
+        return cachedCard ? JSON.parse(cachedCard) as Card : null;
+    }
+
     /**
      * @summary Uses a card's name to get its ID from the Scryfal API
      * @param cardName The exact name of the card
