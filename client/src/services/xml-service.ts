@@ -6,9 +6,7 @@ import DeckDto from '../types/dto/deck-dto';
 import ZoneDto from '../types/dto/zone-dto';
 import CardDto from '../types/dto/card-dto';
 import { scryfall } from '../providers/scryfall-data-provider';
-import { Card } from 'scryfall-api';
-
-const OCTGN_MTG_GUID = 'a6c8d2e8-7cd8-11dd-8f94-e62b56d89593';
+import { OCTGN_MTG_GUID } from '../constants';
 
 const builderOptions: XmlBuilderOptions = {
     format: true,

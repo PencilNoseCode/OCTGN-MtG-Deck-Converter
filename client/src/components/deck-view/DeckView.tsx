@@ -10,7 +10,6 @@ import { DeckViewFavouriteDecks } from './partials/DeckViewFavouriteDecks';
 import DeckDto from '../../types/dto/deck-dto';
 import { useNavigate } from 'react-router';
 import { ZONE } from '../../constants';
-import ZoneDto from '../../types/dto/zone-dto';
 
 export function DeckView({ decks } : { decks: DeckDto[] }) {
     var navigate = useNavigate();

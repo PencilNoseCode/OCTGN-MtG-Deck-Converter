@@ -24,7 +24,7 @@ export default class CardDto {
             id: card.id,
             name: card.name,
             image: card.image_uris?.normal || '',
-            colors: card.colors || [],
+            colors: card.color_identity.length > 0 ? card.color_identity : ["C"],
             type: card.type_line
         };
     }

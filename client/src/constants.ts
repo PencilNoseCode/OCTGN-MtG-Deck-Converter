@@ -1,4 +1,4 @@
-
+export const OCTGN_MTG_GUID = 'a6c8d2e8-7cd8-11dd-8f94-e62b56d89593';
 export const MTG = 'Magic the Gathering';
 export const ZONE = {
     Main: "Main",
@@ -14,9 +14,10 @@ export const ZONES = [
 ]
 
 export const MANA = {
-    WHITE: "/assets/mana/white.svg",
-    BLUE: "/assets/mana/blue.svg",
-    BLACK: "/assets/mana/black.svg",
-    RED: "/assets/mana/red.svg",
-    GREEN: "/assets/mana/green.svg"
+    W: "/assets/mana/white.svg",
+    U: "/assets/mana/blue.svg", // I thought this was "B" for blue but I was wrong
+    B: "/assets/mana/black.svg",// I thought this was "U" for undead but I was wrong
+    R: "/assets/mana/red.svg",
+    G: "/assets/mana/green.svg",
+    C: "/assets/mana/colorless.svg"
 }

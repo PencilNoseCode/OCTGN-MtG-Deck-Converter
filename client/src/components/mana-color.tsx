@@ -6,8 +6,9 @@ export function ManaColor({ color }: { color: string }) {
         Depending on the value we recieve we'll want to return the correct mana image
 
         I've saved the mana images as assets in our project, and set their paths
-        in a constant.  Sample usage looks like this: <img src={MANA.WHITE} />
+        in a constant.  Sample usage looks like this: MANA["W"] />
     */
+
 
     return (
         <>
