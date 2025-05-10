@@ -46,7 +46,6 @@ function App() {
         <>
             <SettingsPage settings={settings} setSettings={setSettings} />
             { decks && <DeckView decks={decks}/> }
-            <CardSearch />
             <QuickBuilder />
             <FileConverter />
         </>

@@ -4,11 +4,14 @@ import Zone from "../../../types/dto/zone-dto";
 
 interface DeckBuilderAccordionItemProps {
     index: number,
-    zone: Zone
+    zone: Zone,
+    addCardClick: any
 }
 
 
-export function DeckBuilderAccordionItem({ index, zone }: DeckBuilderAccordionItemProps) {
+export function DeckBuilderAccordionItem (
+    { index, zone, addCardClick }: DeckBuilderAccordionItemProps
+) {
     return (
         <Accordion.Item key={`${index}`} eventKey={`${index}`}>
             <Accordion.Header>{zone.name}</Accordion.Header>
@@ -30,7 +33,9 @@ export function DeckBuilderAccordionItem({ index, zone }: DeckBuilderAccordionIt
                         ))}
                     </tbody>
                 </Table>
-                <Button variant="primary" size="sm">
+                <Button variant="primary" 
+                        size="sm"
+                        onClick={addCardClick}>
                     Add Card
                 </Button>
             </Accordion.Body>
