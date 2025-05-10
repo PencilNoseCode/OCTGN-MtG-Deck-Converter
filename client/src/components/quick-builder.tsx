@@ -6,9 +6,15 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Alert from 'react-bootstrap/Alert';
+import { FileInput } from './fileInput';
+import { useState } from 'react';
 
 export function QuickBuilder() {
-    // Some logic goes here
+    const [fileContent, setFileContent] = useState("");
+
+    const handleAutoFill = () => {
+        console.log(fileContent);
+    }
 
     return (
         <Container className="QuickBuilder">
@@ -24,11 +30,19 @@ export function QuickBuilder() {
                         <br/>
                         <br/>
                             <Form.Group controlId="formFile" className="mb-3">
-                            <Form.Control type="file" />
+                            <FileInput 
+                                setFileContent={setFileContent}
+                            />
                             <FormText>
                                 <br/>
                                 <Row>
-                                    <Col sm={2}><Button size='sm'>Auto Fill</Button></Col>
+                                    <Col sm={2}>
+                                        <Button 
+                                            size='sm'
+                                            onClick={handleAutoFill}>
+                                            Auto Fill
+                                        </Button>
+                                    </Col>
                                 </Row>
                             </FormText>
                             </Form.Group>
