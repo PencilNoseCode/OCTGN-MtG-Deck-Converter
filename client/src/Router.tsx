@@ -5,7 +5,6 @@ import { DeckBuilder } from "./components/deck-builder/DeckBuilder";
 
 export function Router() {
 
-    console.log("router");
     return (
         <BrowserRouter>
             <Routes>

@@ -71,6 +71,11 @@ class XmlService {
     private parseCards(cards: any[]): CardDto[] {
         var parsedCards: CardDto[] = [];
         if (cards) {
+            // Ensure any single objects come in as an array
+            if (!Array.isArray(cards)) {
+                cards = [cards];
+            }
+
             cards.forEach( async (card: any) => {
                 const scryfallCard = await scryfall.getCardAsync(card["#text"]);
                 if (scryfallCard) {

@@ -26,8 +26,25 @@ class ScryallDataProvider {
     }
 
     private getCardFromCache(cardName: string): Card | null {
-        const cachedCard = localStorage.getItem(cardName);
-        return cachedCard ? JSON.parse(cachedCard) as Card : null;
+        var cachedCard: Card;
+        try {
+            
+            const cachedCardString = localStorage.getItem(cardName);
+            if (cachedCardString) {
+                cachedCard = JSON.parse(cachedCardString) as Card;
+                if (cachedCard) {
+                   return cachedCard;
+                }
+                
+                // Entry was invalid, let's remove it
+                localStorage.removeItem(cardName);
+            }
+            return null;
+        }
+        catch {
+            console.error(`Error occured while trying to retrieve card '${cardName}' from cache`);
+            return null;
+        }
     }
 
     /**
