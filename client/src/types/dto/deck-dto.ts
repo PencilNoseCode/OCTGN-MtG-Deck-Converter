@@ -12,4 +12,12 @@ export default class DeckDto {
     public push(zone: ZoneDto) {
         this.zones.push(zone);
     }
+
+    public count(): number {
+        var total: number = 0;
+        this.zones.forEach(z => {
+            total += z.count();
+        });
+        return total;
+    }
 }

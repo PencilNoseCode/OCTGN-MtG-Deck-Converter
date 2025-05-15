@@ -36,7 +36,11 @@ export function DeckView({ decks } : { decks: DeckDto[] }) {
                     <Col sm={4}>
                         <ListGroup>
                             {decks && decks.map((d,i) => (
-                                <DeckViewListGroupItem key={i} name={d.name} index={i}/>
+                                <DeckViewListGroupItem 
+                                    key={i} 
+                                    name={d.name}
+                                    count={d.count()}
+                                    index={i}/>
                             ))}
                         </ListGroup>
                         <br />

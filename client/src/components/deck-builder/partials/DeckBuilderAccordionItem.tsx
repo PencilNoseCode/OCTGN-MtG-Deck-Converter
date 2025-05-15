@@ -1,10 +1,11 @@
 import { Accordion, Button, Table } from "react-bootstrap";
 import { DeckBuilderAccordionItemTableRow } from "./DeckBuilderAccordionItemTableRow";
-import Zone from "../../../types/dto/zone-dto";
+import ZoneDto from "../../../types/dto/zone-dto";
 
 interface DeckBuilderAccordionItemProps {
     index: number,
-    zone: Zone,
+    zone: ZoneDto,
+    //count: number,
     addCardClick: any
 }
 
@@ -14,7 +15,7 @@ export function DeckBuilderAccordionItem (
 ) {
     return (
         <Accordion.Item key={`${index}`} eventKey={`${index}`}>
-            <Accordion.Header>{zone.name}</Accordion.Header>
+            <Accordion.Header>{`${zone.name}`}</Accordion.Header>
             <Accordion.Body>
                 <Table>
                     <thead>

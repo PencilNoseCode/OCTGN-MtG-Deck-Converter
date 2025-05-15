@@ -4,7 +4,7 @@ import Accordion from 'react-bootstrap/Accordion';
 import DeckDto from '../../types/dto/deck-dto';
 import { DeckBuilderAccordionItem } from './partials/DeckBuilderAccordionItem';
 import { useLocation } from 'react-router';
-import { Drawer } from '../drawer';
+import { Drawer, DrawerPlacement } from '../drawer';
 import { CardSearch } from '../card-search/CardSearch';
 import { useState } from 'react';
 
@@ -30,13 +30,18 @@ export function DeckBuilder() {
                             <DeckBuilderAccordionItem 
                                 index={i} 
                                 zone={zone} 
+                                //count={zone.count()}
                                 addCardClick={handleShowCardSearch} />
                         ))}
                     </Accordion>
                 </>)}
             </Tab.Container>
             <br />
-            <Drawer show={showCardSearch} setShow={setShowCardSearch}>
+            <Drawer 
+                placement={DrawerPlacement.RIGHT}
+                show={showCardSearch} 
+                setShow={setShowCardSearch}
+            >
                 <CardSearch />
             </Drawer>
         </Container>

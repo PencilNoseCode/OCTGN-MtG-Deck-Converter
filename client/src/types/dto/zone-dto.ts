@@ -14,4 +14,12 @@ export default class ZoneDto {
     public push(card: CardDto) {
         this.cards.push(card);
     }
+
+    public count(): number {
+        var total: number = 0;
+        this.cards.forEach(c => {
+            total += parseInt(c.quantity);
+        });
+        return total;
+    }
 }
