@@ -5,27 +5,42 @@ import { CardNotFoundByNameError } from '../errors/CardNotFoundByNameError';
 class ScryallDataProvider {
     public async getCardAsync(cardName: string): Promise<Card> {
         // Get card from cache if available
-        const cachedCard = this.getCardFromCache(cardName);
+        const cachedCard = await this.getCardFromCache(cardName);
         if (cachedCard) {
+            console.debug(`Retrieving ${cardName} from cache`);
             return cachedCard;
         }
-        
-        // Get card from API
-        return await Cards.byName(cardName).then((result) => {
-            if (result) {
-                // Set card in cache
-                this.setCardInCache(result);
-                return result;
-            }
-            throw new CardNotFoundByNameError(cardName);
-        });
+        if (!cachedCard) {
+            console.warn(`Retrieved ${cachedCard} from cache when looking for ${cardName}`);
+            // Get card from API
+            return await Cards.byName(cardName).then((result) => {
+                if (result) {
+                    // Set card in cache
+                    this.setCardInCache(result);
+                    console.warn(`Retrieved "${result.name}" (${cardName}) from scryfall`);
+                    return result;
+                }
+                throw new CardNotFoundByNameError(cardName);
+            });
+        }
+        else {
+            return await Cards.byName(cardName).then((result) => {
+                if (result) {
+                    // Set card in cache
+                    this.setCardInCache(result);
+                    console.warn(`Retriving ${cardName} from scryfall`);
+                    return result;
+                }
+                throw new CardNotFoundByNameError(cardName);
+            });
+        }
     }
 
     private setCardInCache(card: Card) {
         localStorage.setItem(card.name, JSON.stringify(card));
     }
 
-    private getCardFromCache(cardName: string): Card | null {
+    private async getCardFromCache(cardName: string): Promise<Card | null> {
         var cachedCard: Card;
         try {
             

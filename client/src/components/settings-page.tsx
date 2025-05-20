@@ -8,10 +8,12 @@ import { useEffect, useState } from "react";
 import { Notification } from "./notification";
 import Container from "react-bootstrap/Container";
 import { Layout } from "./_layout/Layout";
+import { useSettings } from "../hooks/use-settings";
 
 export function SettingsPage() {
     const [showNotification, setShowNotification] = useState(false);
     const [notification, setNotification] = useState("");
+/*
     const [settings, setSettings] = useState<Settings>();
 
      useEffect(() => {
@@ -24,7 +26,6 @@ export function SettingsPage() {
         getSettingsAsync();
     }, [])  
 
-    
     const writeSettingsAsync = async() => {
         if (settings) {
             const success = await config.write(settings);
@@ -34,12 +35,19 @@ export function SettingsPage() {
             }
         }
     }
+*/
+    const onSettingsUpdate = () => {
+        setNotification(`Saved settings`)
+        setShowNotification(true);
+    }
+
+    const { settings, updateSettings } = useSettings(onSettingsUpdate);
 
     const handleSave = async () => {
-        const settings = new Settings();
-        settings.deckDirectory = getElementById<HTMLInputElement>('deck-directory')?.value ?? '';
-        setSettings(settings);
-        writeSettingsAsync();
+        const newSettings = new Settings();
+        newSettings.deckDirectory = getElementById<HTMLInputElement>('deck-directory')?.value ?? '';
+        newSettings.octgnDataDirectory = getElementById<HTMLInputElement>('octgn-data-directory')?.value ?? '';
+        updateSettings(newSettings);
     }
 
     return (
@@ -63,6 +71,18 @@ export function SettingsPage() {
                                     placeholder="C:\Users\<USERNAME>\AppData\Local\Programs\OCTGN\Data\Decks"
                                     defaultValue={
                                         settings ? settings.deckDirectory : ""
+                                    } />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>OCTGN data directory</td>
+                            <td>
+                                <Form.Control 
+                                    id="octgn-data-directory" 
+                                    type="text"
+                                    placeholder="C:\Users\<USERNAME>\AppData\Local\Programs\OCTGN\Data"
+                                    defaultValue={
+                                        settings ? settings.octgnDataDirectory : ""
                                     } />
                             </td>
                         </tr>

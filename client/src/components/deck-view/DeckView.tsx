@@ -10,8 +10,11 @@ import { DeckViewFavouriteDecks } from './partials/DeckViewFavouriteDecks';
 import DeckDto from '../../types/dto/deck-dto';
 import { useNavigate } from 'react-router';
 import { ZONE } from '../../constants';
+import { Settings } from '../../types/settings';
+import { useDecks } from '../../hooks/use-decks';
 
-export function DeckView({ decks } : { decks: DeckDto[] }) {
+export function DeckView({ settings } : { settings: Settings }) {
+    const { decks } = useDecks(settings);
     var navigate = useNavigate();
 
     const TAB_ID_PREFIX = "Decks-tab-#deck"
@@ -21,9 +24,18 @@ export function DeckView({ decks } : { decks: DeckDto[] }) {
         tabs.forEach((t: Element) => {
             if (t.classList.contains('active')) {
                 const deckIndex = parseInt(t.id.substring(TAB_ID_PREFIX.length));
-                navigate(`/decks/${deckIndex}`, { state: decks[deckIndex]})
+                navigate(`/decks/${deckIndex}`, { 
+                    state: { 
+                        settings: settings,
+                        deckIndex: deckIndex
+                    }
+                });
             }
         } )
+    }
+
+    if (!decks) {
+        return null;
     }
 
     return (

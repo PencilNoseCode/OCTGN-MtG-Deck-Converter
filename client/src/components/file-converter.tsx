@@ -6,6 +6,7 @@ import { ConvertButton } from './convert-button';
 import { ContentDownload } from './content-download';
 import { text } from '../services/text-file-service';
 import { xml } from '../services/xml-service';
+import { useSettings } from '../hooks/use-settings';
 
 export function FileConverter() {
     const [selectedFile, setSelectedFile] = useState('No file selected');
@@ -13,6 +14,7 @@ export function FileConverter() {
     const [deckXML, setDeckXML] = useState('');
     const [disableDownload, setDisableDownload] = useState(true);
     const [isConverting, setIsConverting] = useState(false);
+    const { settings } = useSettings();
 
     useEffect(() => {
         setDisableDownload(true);

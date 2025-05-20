@@ -25,7 +25,7 @@ const xmlBuilder = new XMLBuilder(builderOptions);
 const xmlParser = new XMLParser(parserOptions);
 
 class XmlService {
-
+    
     // Building the .o8d files
     public build(deck: DeckDto): string {
         return xmlBuilder.build([
@@ -79,7 +79,9 @@ class XmlService {
             cards.forEach( async (card: any) => {
                 const scryfallCard = await scryfall.getCardAsync(card["#text"]);
                 if (scryfallCard) {
-                    parsedCards.push(CardDto.fromScryfallCard(scryfallCard, card.qty));
+                    parsedCards.push(
+                        CardDto.fromScryfallCard(scryfallCard, card.qty)
+                    );
                 }
             });
         }
@@ -88,4 +90,3 @@ class XmlService {
 }
 
 export const xml = new XmlService();
-

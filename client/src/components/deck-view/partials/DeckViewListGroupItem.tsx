@@ -7,7 +7,8 @@ export function DeckViewListGroupItem(
 
     return (
         <ListGroup.Item action href={href}>
-            {`${name.slice(0, name.length - 4)} (${count})`}
+            {`${name.slice(0, name.length - 4)}`}
+            {/* {`${name.slice(0, name.length - 4)} (${count})`} */}
         </ListGroup.Item>
     );
 }

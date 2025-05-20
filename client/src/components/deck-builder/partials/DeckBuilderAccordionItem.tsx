@@ -30,7 +30,10 @@ export function DeckBuilderAccordionItem (
                     </thead>
                     <tbody>
                         {zone.cards && zone.cards.map((card, i) => (
-                            <DeckBuilderAccordionItemTableRow index={i} card={card}/>
+                            <DeckBuilderAccordionItemTableRow 
+                                key={i}
+                                index={i}
+                                card={card}/>
                         ))}
                     </tbody>
                 </Table>

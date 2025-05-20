@@ -6,9 +6,20 @@ function pathExists(path) {
     return fs.existsSync(path);
 }
 
-function writeFile(filePath, settings) {
+function writeJsonFile(filePath, settings) {
     try {
         fs.writeFileSync(filePath, JSON.stringify(settings));
+        return true;
+    }
+    catch (ex) {
+        console.error(ex);
+        return false;
+    }
+}
+
+function writeFile(filePath, fileContent) {
+    try {
+        fs.writeFileSync(filePath, fileContent);
         return true;
     }
     catch (ex) {
@@ -49,6 +60,7 @@ function readDecks(deckDirectory) {
 module.exports = {
     pathExists,
     writeFile,
+    writeJsonFile,
     readFile,
     readFileNames,
     readDecks

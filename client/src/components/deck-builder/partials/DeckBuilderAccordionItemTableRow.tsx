@@ -7,7 +7,7 @@ export function DeckBuilderAccordionItemTableRow({ index, card }: { index: numbe
     return (
         <tr key={`${index}`}>
             <td>{card.name}</td>
-            <td>{card.colors.map(c => <ManaColor color={c} />)}</td>
+            <td>{card.colors.map(c => <ManaColor key={c} color={c} />)}</td>
             <td>{card.type}</td>
             <td>
                 <Button size="sm" variant="light">
