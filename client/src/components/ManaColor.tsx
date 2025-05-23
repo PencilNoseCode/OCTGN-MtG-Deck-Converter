@@ -1,4 +1,8 @@
-import { MANA } from "../constants"
+import { MANA } from "../constants";
+
+export function ManaColors(colors: string[]) {
+    return colors.map(c => <ManaColor key={c} color={c} />);
+}
 
 export function ManaColor({ color }: { color: string }) {
     /*

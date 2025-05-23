@@ -17,10 +17,12 @@ export function DeckViewTabPane({
             <Card style={{ width: '28rem' }}>
                 <Card.Body>
                     <Card.Title>{name.slice(0, name.length - 4)}</Card.Title>
-                    <Card.Img
-                        variant="top"
-                        src={image}
-                    />
+                    { image?.length > 0 && 
+                        <Card.Img
+                            variant="top"
+                            src={image}
+                        />
+                    }
                     <Table>
                         <thead>
                             <tr>

@@ -1,15 +1,7 @@
-import Button from 'react-bootstrap/Button';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 
-export const DrawerPlacement = {
-  LEFT: "start",
-  RIGHT: "end", 
-  TOP: "top",
-  BOTTOM: "bottom"
-}
-
 interface DrawerProps {
-    placement: string
+    placement: "start" | "end" | "top" | "bottom"
     show: boolean,
     setShow: React.Dispatch<React.SetStateAction<boolean>>,
     children: React.ReactNode

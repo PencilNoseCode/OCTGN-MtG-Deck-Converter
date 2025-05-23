@@ -39,6 +39,7 @@ export function DeckBuilderAccordionItem (
                 </Table>
                 <Button variant="primary" 
                         size="sm"
+                        type="button"
                         onClick={addCardClick}>
                     Add Card
                 </Button>

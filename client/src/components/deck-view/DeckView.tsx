@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router';
 import { ZONE } from '../../constants';
 import { Settings } from '../../types/settings';
 import { useDecks } from '../../hooks/use-decks';
+import CardDto from '../../types/dto/card-dto';
 
 export function DeckView({ settings } : { settings: Settings }) {
     const { decks } = useDecks(settings);
@@ -89,14 +90,7 @@ function renderDeckViewTabPane(deck: DeckDto, index: number) {
         commanderZone.cards[0] : (mainZone && mainZone.cards[0]);
 
     if (!coverCard) {
-        coverCard = {
-            name: 'N/A',
-            quantity: 'N/A',
-            id: 'N/A',
-            image: 'N/A',
-            type: 'N/A',
-            colors: []
-        } 
+        coverCard = new CardDto(); 
     }
 
     return (

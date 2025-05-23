@@ -7,6 +7,9 @@ import ZoneDto from '../types/dto/zone-dto';
 import CardDto from '../types/dto/card-dto';
 import { scryfall } from '../providers/scryfall-data-provider';
 import { OCTGN_MTG_GUID } from '../constants';
+import { SectionJson } from '../types/json/section-json';
+import { DeckJson } from '../types/json/deck-json';
+import { CardJson } from '../types/json/card-json';
 
 const builderOptions: XmlBuilderOptions = {
     format: true,
@@ -51,12 +54,12 @@ class XmlService {
     
     // Parsing the .o8d files
     public parse(deckName: string, deckXml: string): DeckDto {
-        const deckJson = xmlParser.parse(deckXml).deck;
+        const deckJson: DeckJson = xmlParser.parse(deckXml).deck;
         return new DeckDto(deckName, this.parseSections(deckJson.section));
     }
     
-    private parseSections(sections: any[]): ZoneDto[] {
-        return sections.map((section: any) => (
+    private parseSections(sections: SectionJson[]): ZoneDto[] {
+        return sections.map((section: SectionJson) => (
             new ZoneDto(section.name, this.parseCards(section.card), section.shared)
         ));
     }
@@ -68,7 +71,7 @@ class XmlService {
         )) : [];
     }
 
-    private parseCards(cards: any[]): CardDto[] {
+    private parseCards(cards: CardJson[]): CardDto[] {
         var parsedCards: CardDto[] = [];
         if (cards) {
             // Ensure any single objects come in as an array
@@ -76,8 +79,8 @@ class XmlService {
                 cards = [cards];
             }
 
-            cards.forEach( async (card: any) => {
-                const scryfallCard = await scryfall.getCardAsync(card["#text"]);
+            cards.forEach( async (card: CardJson) => {
+                const scryfallCard = await scryfall.getCardbyId(card.id);                //const scryfallCard = await scryfall.getCardByName(card["#text"]);
                 if (scryfallCard) {
                     parsedCards.push(
                         CardDto.fromScryfallCard(scryfallCard, card.qty)
@@ -90,3 +93,4 @@ class XmlService {
 }
 
 export const xml = new XmlService();
+

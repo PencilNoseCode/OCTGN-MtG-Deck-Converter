@@ -11,10 +11,9 @@ export function useDecks(settings: Settings) {
     useEffect(() => {
         const getDecksAsync = async () => {
             if (settings && (!decks || decks.length === 0)) {
-                const decks = await api.getDecks(settings.deckDirectory)
-                if (decks) {
-                    setDecks(
-                        decks.data.map((d: any) => (
+                const deckFiles = await api.getDecks(settings.deckDirectory)
+                if (deckFiles) {
+                    setDecks(deckFiles.data.map((d: any) => (
                             xml.parse(d.name, bufferToString(d.content))
                         ))
                     )

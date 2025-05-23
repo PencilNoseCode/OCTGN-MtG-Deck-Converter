@@ -69,7 +69,7 @@ public parse(content: string): DeckDto {
         for (let i = 0; i < deck.zones.length; i++) {
             for (let j = 0; j < deck.zones[i].cards.length; j++) {
                 card = deck.zones[i].cards[j];
-                var result = await scryfall.getCardAsync(card.name);
+                var result = await scryfall.getCardByName(card.name);
                 card.id = result.id;
             }
         }

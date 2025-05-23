@@ -1,13 +1,12 @@
 import { Button, Dropdown, DropdownButton } from "react-bootstrap";
 import Card from "../../../types/dto/card-dto";
-import { ManaColor } from "../../mana-color";
-
+import { ManaColors } from "../../ManaColor";
 
 export function DeckBuilderAccordionItemTableRow({ index, card }: { index: number, card: Card}) {
     return (
         <tr key={`${index}`}>
             <td>{card.name}</td>
-            <td>{card.colors.map(c => <ManaColor key={c} color={c} />)}</td>
+            <td>{ManaColors(card.colors)}</td>
             <td>{card.type}</td>
             <td>
                 <Button size="sm" variant="light">

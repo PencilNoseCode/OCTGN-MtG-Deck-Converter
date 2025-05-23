@@ -70,6 +70,7 @@ class ApiService {
     }
 
     async writeDeck(deckFilePath: string, deck: DeckDto) {
+        console.debug(`writing deck to ${deckFilePath}`);
         const deckXml = xml.build(deck);
         const res = await this.postRequest("/decks/write", new Data(deckFilePath, deckXml));
         return res;
