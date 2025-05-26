@@ -57,5 +57,5 @@ server.get('/{*splat}', (req, res) => {
 });
 
 server.listen(PORT, async () => {
-    console.log(`Click 'http://localhost:${PORT}' to open OCTGNMagic`);
+    console.log(`server listening on 'http://localhost:${PORT}'`);
 });

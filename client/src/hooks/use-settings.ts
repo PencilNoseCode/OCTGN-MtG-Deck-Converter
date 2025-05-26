@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Settings } from "../types/settings";
 import { config } from "../services/config-service";
 
-export function useSettings(saveSettingsSuccessFunc?: Function) {
+export function useSettings(onSaveSettingsSuccess?: Function) {
     const [settings, setSettings] = useState(new Settings());
     const updateSettings = (newSettings: Settings) => setSettings(newSettings);
     
@@ -16,8 +16,8 @@ export function useSettings(saveSettingsSuccessFunc?: Function) {
     const writeSettingsAsync = async() => {
         if (settings) {
             const success = await config.write(settings);
-            if (success && saveSettingsSuccessFunc) {
-                saveSettingsSuccessFunc();
+            if (success && onSaveSettingsSuccess) {
+                onSaveSettingsSuccess();
             }
         }
     }

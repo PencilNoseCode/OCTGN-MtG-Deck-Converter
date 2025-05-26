@@ -5,7 +5,7 @@ import { getElementById } from "../helpers/document-helper";
 import { Settings } from "../types/settings";
 import { config } from "../services/config-service";
 import { useEffect, useState } from "react";
-import { Notification } from "./notification";
+import { Notification } from "./Notification";
 import Container from "react-bootstrap/Container";
 import { Layout } from "./_layout/Layout";
 import { useSettings } from "../hooks/use-settings";

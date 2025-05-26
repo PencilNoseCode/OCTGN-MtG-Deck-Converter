@@ -55,7 +55,9 @@ class XmlService {
     // Parsing the .o8d files
     public parse(deckName: string, deckXml: string): DeckDto {
         const deckJson: DeckJson = xmlParser.parse(deckXml).deck;
-        return new DeckDto(deckName, this.parseSections(deckJson.section));
+        const deck = new DeckDto(deckName);
+        deck.setZones(this.parseSections(deckJson.section));
+        return deck;
     }
     
     private parseSections(sections: SectionJson[]): ZoneDto[] {

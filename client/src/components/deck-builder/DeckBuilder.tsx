@@ -13,9 +13,9 @@ import { getElementById } from '../../helpers/document-helper';
 
 export function DeckBuilder() {
     const location = useLocation();
-    const { settings, deckIndex } = location.state;
+    const { settings, deckIndex, deck } = location.state;
     const { decks, saveDeck } = useDecks(settings);
-    const currentDeck = decks[deckIndex];
+    const currentDeck: DeckDto = deck ? deck : decks[deckIndex];
 
     const [showCardSearch, setShowCardSearch] = useState(false);
     const handleCloseCardSearch = () => setShowCardSearch(false);

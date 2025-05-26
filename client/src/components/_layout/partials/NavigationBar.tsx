@@ -25,9 +25,13 @@ export function NavigationBar() {
                 </Offcanvas.Title>
               </Offcanvas.Header>
               <Offcanvas.Body>
-                <Nav className="justify-content-end flex-grow-1 pe-3">
+                <Nav className="justify-content-start flex-grow-1 pe-3">
+                  <Nav.Link href="/quick">
+                    QuickBuilder
+                  </Nav.Link>
                   <Nav.Link href="/settings">
-                    <FontAwesomeIcon icon={faGear} />
+                    Settings
+                    {/* <FontAwesomeIcon icon={faGear} /> */}
                   </Nav.Link>
                 </Nav>
                 

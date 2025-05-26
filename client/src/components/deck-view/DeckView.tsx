@@ -28,7 +28,7 @@ export function DeckView({ settings } : { settings: Settings }) {
                 navigate(`/decks/${deckIndex}`, { 
                     state: { 
                         settings: settings,
-                        deckIndex: deckIndex
+                        deckIndex: deckIndex,
                     }
                 });
             }
@@ -84,8 +84,8 @@ export function DeckView({ settings } : { settings: Settings }) {
 }
 
 function renderDeckViewTabPane(deck: DeckDto, index: number) {
-    const commanderZone = deck.zones.find(z => z.name === ZONE.Command_Zone);
-    const mainZone = deck.zones.find(z => z.name === ZONE.Main);
+    const commanderZone = deck.commandZone;
+    const mainZone = deck.mainZone;
     var coverCard = (commanderZone && commanderZone.cards.length > 0) ?
         commanderZone.cards[0] : (mainZone && mainZone.cards[0]);
 

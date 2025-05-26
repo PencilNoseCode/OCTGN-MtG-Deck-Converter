@@ -7,53 +7,44 @@ import ZoneDto from '../types/dto/zone-dto';
 
 
 class TextFileService {
-    /**
-    * @param content from uploaded text file
-    * @returns Array<UserCard>
-    *
-    * @todo figure out how to handle Zones
-    * @todo return custom error messages
-    */
-public parse(content: string): DeckDto {
-    console.log('content', content);
-    if (!content) {
-        //**TODO: THROW CUSTOM ERROR**//
-        return new DeckDto(); // abort parsing
+    public cardToText(card: CardDto): string {
+            return `${card.quantity}x ${card.name}`;
+        }
+    
+    public parse(content: string): DeckDto {
+        if (!content) {
+            //**TODO: THROW CUSTOM ERROR**//
+            return new DeckDto(); // abort parsing
+        }
+
+        var deck: DeckDto = new DeckDto();
+        var currentZone: ZoneDto;
+        content.split(/\r?\n/).forEach((element: string) => {
+            if (element && MTG === element) {
+                return;
+            }
+            if (element && ZONES.includes(element)) {
+                //managing zone content
+                var zone: ZoneDto = new ZoneDto(element);
+                currentZone = zone;
+                deck.push(zone);
+            }
+            if (element && !ZONES.includes(element)) {
+                //managing card content
+                currentZone.push(this.textToCard(element));
+            }
+        });
+        return deck;
     }
 
-    var deck: DeckDto = new DeckDto();
-    content.split(/\r?\n/).forEach((element: string) => {
-        if (element && MTG === element) {
-            return;
-        }
-        if (element && ZONES.includes(element)) {
-            //managing zone content
-            var zone: ZoneDto = new ZoneDto(element);
-            deck.push(zone);
-        }
-        if (element && !ZONES.includes(element)) {
-            //managing card content
-            deck.zones[deck.zones.length - 1].push(
-                this.createCard(element)
-            );
-        }
-    });
-    console.log(deck);
-    return deck;
-}
-
-/**
-    * @param cardQuant quantity of a specific card in the deck
-    * @param cardName name of a specific card in the deck
-    */
-    private createCard(element: string): CardDto {
+    public textToCard(element: string): CardDto {
         const xIndex = element.indexOf('x');
         const cardQuant = element.substring(0, xIndex);
         const cardName = element.substring(xIndex + 2).trimStart();
 
         if (!cardQuant || !cardName) {
             //**TODO: THROW CUSTOM ERROR**//
-            console.log('invalid card parameters');
+            console.error('invalid card parameters');
         }
         return new CardDto(cardQuant, '', cardName);
     }

@@ -28,10 +28,10 @@ export function useDecks(settings: Settings) {
         await api.writeDeck(`${settings.deckDirectory}/${deck.name}`, deck);
     }
 
-    const saveDeck = (updatedDeck: DeckDto, deckIndex: number) => {
+    const saveDeck = (updatedDeck: DeckDto, deckIndex?: number) => {
         setDecks(prevDecks => prevDecks.map((d, i) => {
             return (i === deckIndex) ? updatedDeck : d;
-        }))
+        }));
         writeDeckAsync(updatedDeck);
     }
 
@@ -39,7 +39,7 @@ export function useDecks(settings: Settings) {
         setDecks(allDecks);
         allDecks.forEach(d => {
             writeDeckAsync(d);
-        })
+        });
     }
 
     return { decks, saveDeck, saveAllDecks };
