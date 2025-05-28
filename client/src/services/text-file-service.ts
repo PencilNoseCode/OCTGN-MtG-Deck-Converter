@@ -57,9 +57,9 @@ class TextFileService {
     */
     public async populateCardIds(deck: DeckDto): Promise<DeckDto> {
         var card: CardDto;
-        for (let i = 0; i < deck.zones.length; i++) {
-            for (let j = 0; j < deck.zones[i].cards.length; j++) {
-                card = deck.zones[i].cards[j];
+        for (let i = 0; i < deck.getZones().length; i++) {
+            for (let j = 0; j < deck.getZones()[i].cards.length; j++) {
+                card = deck.getZones()[i].cards[j];
                 var result = await scryfall.getCardByName(card.name);
                 card.id = result.id;
             }

@@ -7,7 +7,6 @@ export default class DeckDto {
     commandZone: ZoneDto;
     sideboardZone: ZoneDto;
     planesSchemesZone: ZoneDto;
-    readonly zones: ZoneDto[];
 
     public constructor(name?: string) {
         this.name = name || '';
@@ -15,7 +14,10 @@ export default class DeckDto {
         this.commandZone = new ZoneDto(ZONE.Command_Zone);
         this.sideboardZone = new ZoneDto(ZONE.Sideboard);
         this.planesSchemesZone = new ZoneDto(ZONE.Planes_Schemes);
-        this.zones = [this.mainZone, this.commandZone, this.sideboardZone, this.planesSchemesZone];
+    }
+    
+    public getZones() {
+        return [this.mainZone, this.commandZone, this.sideboardZone, this.planesSchemesZone];
     }
 
     public setZones(zones: ZoneDto[]): void { 
@@ -25,7 +27,7 @@ export default class DeckDto {
                 case ZONE.Command_Zone: this.commandZone = z; break;
                 case ZONE.Sideboard: this.sideboardZone = z; break;
                 case ZONE.Planes_Schemes: this.planesSchemesZone = z; break;
-                default: throw Error("Someone's been tampering with raw .o8d files huh?");
+                default: throw new Error("Someone's been tampering with raw .o8d files huh?");
             }
         });
     }
@@ -43,7 +45,7 @@ export default class DeckDto {
 
     public count(): number {
         var total: number = 0;
-        this.zones.forEach(z => {
+        this.getZones().forEach(z => {
             total += z.count();
         });
         return total;

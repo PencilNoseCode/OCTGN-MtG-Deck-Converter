@@ -9,13 +9,14 @@ import { DeckViewTabPane } from './partials/DeckViewTabPane';
 import { DeckViewFavouriteDecks } from './partials/DeckViewFavouriteDecks';
 import DeckDto from '../../types/dto/deck-dto';
 import { useNavigate } from 'react-router';
-import { ZONE } from '../../constants';
 import { Settings } from '../../types/settings';
 import { useDecks } from '../../hooks/use-decks';
 import CardDto from '../../types/dto/card-dto';
+import { useCurrentDeck } from '../../hooks/use-current-deck';
 
 export function DeckView({ settings } : { settings: Settings }) {
     const { decks } = useDecks(settings);
+    const { setCurrentDeck } = useCurrentDeck();
     var navigate = useNavigate();
 
     const TAB_ID_PREFIX = "Decks-tab-#deck"
@@ -25,14 +26,10 @@ export function DeckView({ settings } : { settings: Settings }) {
         tabs.forEach((t: Element) => {
             if (t.classList.contains('active')) {
                 const deckIndex = parseInt(t.id.substring(TAB_ID_PREFIX.length));
-                navigate(`/decks/${deckIndex}`, { 
-                    state: { 
-                        settings: settings,
-                        deckIndex: deckIndex,
-                    }
-                });
+                setCurrentDeck(decks[deckIndex]);
+                navigate(`/decks/${deckIndex}`);
             }
-        } )
+        });
     }
 
     if (!decks) {
@@ -48,11 +45,11 @@ export function DeckView({ settings } : { settings: Settings }) {
                 <Row>
                     <Col sm={4}>
                         <ListGroup>
-                            {decks && decks.map((d,i) => (
+                            {decks.map((d,i) => (
                                 <DeckViewListGroupItem 
                                     key={i} 
                                     name={d.name}
-                                    count={d.count()}
+                                    //count={d.count()}
                                     index={i}/>
                             ))}
                         </ListGroup>
@@ -72,7 +69,7 @@ export function DeckView({ settings } : { settings: Settings }) {
                     </Col>
                     <Col sm={8}>
                         <Tab.Content>
-                            {decks && decks.map((d,i) => (
+                            {decks.map((d,i) => (
                                 renderDeckViewTabPane(d, i)
                             ))}
                         </Tab.Content>
@@ -92,7 +89,7 @@ function renderDeckViewTabPane(deck: DeckDto, index: number) {
     if (!coverCard) {
         coverCard = new CardDto(); 
     }
-
+    
     return (
         <DeckViewTabPane 
             key={index}

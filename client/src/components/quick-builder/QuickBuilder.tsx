@@ -17,12 +17,14 @@ import DeckDto from '../../types/dto/deck-dto';
 import { useNavigate } from 'react-router';
 import ZoneDto from '../../types/dto/zone-dto';
 import CardDto from '../../types/dto/card-dto';
+import { useCurrentDeck } from '../../hooks/use-current-deck';
 
 export function QuickBuilder() {
     var navigate = useNavigate();
     const [fileContent, setFileContent] = useState("");
     const { settings } = useSettings();
     const { decks, saveDeck } = useDecks(settings);
+    const { setCurrentDeck } = useCurrentDeck();
 
     const commandZone = getElementById<HTMLTextAreaElement>('inputCommandZoneCards');
     const mainZone = getElementById<HTMLTextAreaElement>('inputMainCards');
@@ -88,14 +90,8 @@ export function QuickBuilder() {
         const deckIndex = decks.length;
         const newDeckWithIds = await text.populateCardIds(newDeck);
         saveDeck(newDeckWithIds);
-
-        navigate(`/decks/${deckIndex}`, { 
-            state: { 
-                settings: settings,
-                deckIndex: deckIndex,
-                deck: newDeckWithIds
-            }
-        });
+        setCurrentDeck(newDeckWithIds);
+        navigate(`/decks/${deckIndex}`);
     }
 
     return (

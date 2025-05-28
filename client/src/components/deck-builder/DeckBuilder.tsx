@@ -2,7 +2,7 @@ import { Anchor, Button, Container } from 'react-bootstrap';
 import Tab from 'react-bootstrap/Tab';
 import Accordion from 'react-bootstrap/Accordion';
 import { DeckBuilderAccordionItem } from './partials/DeckBuilderAccordionItem';
-import { useLocation } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 import { Drawer } from '../drawer';
 import { CardSearch } from '../card-search/CardSearch';
 import { useEffect, useState } from 'react';
@@ -10,12 +10,13 @@ import { useDecks } from '../../hooks/use-decks';
 import DeckDto from '../../types/dto/deck-dto';
 import { Layout } from '../_layout/Layout';
 import { getElementById } from '../../helpers/document-helper';
+import { useSettings } from '../../hooks/use-settings';
+import { useCurrentDeck } from '../../hooks/use-current-deck';
 
 export function DeckBuilder() {
-    const location = useLocation();
-    const { settings, deckIndex, deck } = location.state;
-    const { decks, saveDeck } = useDecks(settings);
-    const currentDeck: DeckDto = deck ? deck : decks[deckIndex];
+    const { settings } = useSettings();
+    const { saveDeck } = useDecks(settings);
+    const { currentDeck } = useCurrentDeck();
 
     const [showCardSearch, setShowCardSearch] = useState(false);
     const handleCloseCardSearch = () => setShowCardSearch(false);
@@ -25,7 +26,7 @@ export function DeckBuilder() {
     const saveMessageDuration = 3000;
 
     const handleSave = () => {
-        saveDeck(decks[deckIndex], deckIndex);
+        saveDeck(currentDeck);
         if (saveMessage) {
             saveMessage.innerHTML = " Saved!";
             setTimeout(() => {
@@ -50,7 +51,7 @@ export function DeckBuilder() {
                         <br />
                         <br />
                         <Accordion defaultActiveKey={['0','1']} alwaysOpen>
-                            {currentDeck.zones.map((zone, i) => (
+                            {currentDeck.getZones().map((zone, i) => (
                                 <DeckBuilderAccordionItem 
                                     key={i}
                                     index={i} 

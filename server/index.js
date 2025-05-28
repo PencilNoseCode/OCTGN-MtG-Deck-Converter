@@ -28,6 +28,7 @@ server.post('/api/path-exists', (req, res) => {
 });
 
 server.post('/api/settings-write', (req, res) => {
+
     res.send(writeJsonFile(SETTINGS_FILE_PATH, req.body));
 });
 

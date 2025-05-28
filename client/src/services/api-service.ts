@@ -1,11 +1,11 @@
-import axios, { AxiosInstance, AxiosResponse } from "axios";
+import axios, { Axios, AxiosInstance, AxiosResponse } from "axios";
 import { Settings } from "../types/settings";
 import DeckDto from "../types/dto/deck-dto";
 import { xml } from "./xml-service";
 
 const BASE_URL = 'http://localhost:8080/api';
 
-class Data {
+class PostBody {
     path: string
     content: string
 
@@ -24,56 +24,38 @@ class ApiService {
         })
     }
 
-    private async getRequest(relativeURL: string) {
-        try {
-            return await this.api.get(relativeURL);
-        }
-        catch (ex) {
-            console.error(`Error occured while getting ${relativeURL}:\n`, ex);
-        }
+    private async getRequest<T>(relativeURL: string) {
+        const res: AxiosResponse<T> = await this.api.get<T>(relativeURL);
+        const data: T = res.data;
+        return data;
     }
 
-    private async postRequest(relativeURL: string, data: Data | Settings) {
-        try {
-            //console.debug(`Posting to ${relativeURL}`);
-            return await this.api.post(relativeURL, data);
-        }
-        catch (ex) {
-            console.error(`Error occured while posting to ${relativeURL}:\n`, ex);
-        }
+    private async postRequest<T>(relativeURL: string, postBody: PostBody | Settings) {
+        const res: AxiosResponse<T> = await this.api.post<T>(relativeURL, postBody);
+        const data: T = res.data;
+        return data;
     }
 
-    // async getImageUrl(setId: string, cardId: string): Promise<string> {
-    //     return await this.getRequest(`/images/${setId}/Cards/${cardId}`).then(result => {
-    //         return result?.data as string;
-    //     });
-    // }
-
-    async pathExists(path: string): Promise<AxiosResponse<boolean>> {
-        const res =  await this.postRequest("/path-exists", new Data(path));
-        if (!res) {
-            console.error(`Error occured while checking if ${path} exists`);
-        }
-        return res?.data;
+    async pathExists(path: string) {
+        return await this.postRequest<boolean>("/path-exists", new PostBody(path));
     }
 
     async writeSettings(settings: Settings) {
-        return await this.postRequest("/settings-write", settings);
+        return await this.postRequest<boolean>("/settings-write", settings);
     }
 
     async readSettings() {
-        return await this.getRequest("/settings-read");
+        return await this.getRequest<Settings>("/settings-read");
     }
 
     async getDecks(deckDirectory: string) {
-        return await this.postRequest("/decks", new Data(deckDirectory));
+        return await this.postRequest<any>("/decks", new PostBody(deckDirectory));
     }
 
     async writeDeck(deckFilePath: string, deck: DeckDto) {
         console.debug(`writing deck to ${deckFilePath}`);
         const deckXml = xml.build(deck);
-        const res = await this.postRequest("/decks/write", new Data(deckFilePath, deckXml));
-        return res;
+        return await this.postRequest<boolean>("/decks/write", new PostBody(deckFilePath, deckXml));
     }
 }
 

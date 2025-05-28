@@ -32,7 +32,7 @@ class XmlService {
     // Building the .o8d files
     public build(deck: DeckDto): string {
         return xmlBuilder.build([
-            new DeckNode(OCTGN_MTG_GUID, this.buildSectionNodes(deck.zones)),
+            new DeckNode(OCTGN_MTG_GUID, this.buildSectionNodes(deck.getZones())),
         ]);
     }
     
@@ -53,17 +53,23 @@ class XmlService {
     }
     
     // Parsing the .o8d files
-    public parse(deckName: string, deckXml: string): DeckDto {
+    public async parse(deckName: string, deckXml: string): Promise<DeckDto> {
         const deckJson: DeckJson = xmlParser.parse(deckXml).deck;
         const deck = new DeckDto(deckName);
-        deck.setZones(this.parseSections(deckJson.section));
+
+        deck.setZones(await this.parseSections(deckJson.section));
         return deck;
     }
     
-    private parseSections(sections: SectionJson[]): ZoneDto[] {
-        return sections.map((section: SectionJson) => (
-            new ZoneDto(section.name, this.parseCards(section.card), section.shared)
+    private async parseSections(sections: SectionJson[]): Promise<ZoneDto[]> {
+        const parsedZones = sections.map(async (section: SectionJson) => (
+            new ZoneDto(
+                section.name,
+                section?.card ? await this.parseCards(section.card) : [],
+                section.shared
+            )
         ));
+        return await Promise.all(parsedZones);
     }
     
     // Delete this once I'm sure we don't need it
@@ -73,24 +79,23 @@ class XmlService {
         )) : [];
     }
 
-    private parseCards(cards: CardJson[]): CardDto[] {
-        var parsedCards: CardDto[] = [];
-        if (cards) {
-            // Ensure any single objects come in as an array
-            if (!Array.isArray(cards)) {
-                cards = [cards];
-            }
-
-            cards.forEach( async (card: CardJson) => {
-                const scryfallCard = await scryfall.getCardbyId(card.id);                //const scryfallCard = await scryfall.getCardByName(card["#text"]);
-                if (scryfallCard) {
-                    parsedCards.push(
-                        CardDto.fromScryfallCard(scryfallCard, card.qty)
-                    );
-                }
-            });
+    private async parseCards(cards: CardJson[]): Promise<CardDto[]> {
+        // Ensure any single objects come in as an array
+        if (!Array.isArray(cards)) {
+            cards = [cards];
         }
-        return parsedCards;
+        const parsedCards = cards.map(async (card: CardJson) => {
+            try { 
+                return await scryfall.getCardbyId(card.id)
+                    .then(c => CardDto.fromScryfallCard(c, card.qty)); 
+            }
+            catch (e) {
+                const errorMessage = `Error occured while triyng to parse the card: ${JSON.stringify(card)}`;
+                console.error(errorMessage);
+                throw new Error(errorMessage);
+            }
+        });
+        return await Promise.all(parsedCards);
     }
 }
 

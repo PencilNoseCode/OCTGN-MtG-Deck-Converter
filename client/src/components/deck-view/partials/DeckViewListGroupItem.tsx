@@ -1,7 +1,7 @@
 import ListGroup from "react-bootstrap/ListGroup";
 
 export function DeckViewListGroupItem(
-    { name, count , index } : { name: string, count: number, index: number }
+    { name, index } : { name: string, index: number }
 ) {
     const href: string = `#deck${index}`;
 

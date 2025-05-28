@@ -1,7 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-
 function pathExists(path) {
     return fs.existsSync(path);
 }
