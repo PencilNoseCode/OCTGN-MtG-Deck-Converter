@@ -21,15 +21,22 @@ export function DeckView({ settings } : { settings: Settings }) {
 
     const TAB_ID_PREFIX = "Decks-tab-#deck"
 
-    const handleClick = () => {
-        const tabs = document.querySelectorAll(`a[id^="${TAB_ID_PREFIX}"]`);
-        tabs.forEach((t: Element) => {
+    const getTabs = () => document.querySelectorAll(`a[id^="${TAB_ID_PREFIX}"]`);
+
+    const handleEdit = () => {
+        getTabs().forEach((t: Element) => {
             if (t.classList.contains('active')) {
                 const deckIndex = parseInt(t.id.substring(TAB_ID_PREFIX.length));
                 setCurrentDeck(decks[deckIndex]);
                 navigate(`/decks/${deckIndex}`);
             }
         });
+    }
+
+    const handleAdd = () => {
+        const newDeckIndex = getTabs().length;
+        setCurrentDeck(new DeckDto());
+        navigate(`/decks/${newDeckIndex}`);
     }
 
     if (!decks) {
@@ -56,12 +63,12 @@ export function DeckView({ settings } : { settings: Settings }) {
                         <br />
                         <Row>
                             <Col sm={6}>
-                                <Button size="sm" variant="primary">
+                                <Button size="sm" variant="primary" onClick={handleAdd}>
                                     Add Deck
                                 </Button>
                             </Col>
                             <Col sm={6}>
-                                <Button size="sm" variant="primary" onClick={handleClick}>
+                                <Button size="sm" variant="primary" onClick={handleEdit}>
                                     Edit Deck
                                 </Button>
                             </Col>
